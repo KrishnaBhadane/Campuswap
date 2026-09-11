@@ -4,15 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Campuswap</title>
-  <link rel="stylesheet" href="Frontend/header.css">
+  <!-- Google Font: Lobster Two -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/header.css">
+  <link rel="stylesheet" href="CSS/logo_name.css">
+  <link rel="stylesheet" href="CSS/highlighted_content.css">
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Plain Header -->
   <header class="header">
     <a href="#">
       <img src="assets/logo.png" alt="Logo" class="logo">
     </a>
+
+    <!-- Search Bar -->
+    <div class="search-box">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" class="search-input" placeholder="Search books, notes, materials...">
+    </div>
+
     <nav>
       <ul class="nav-links">
         <li><a href="#material">Material</a></li>
@@ -20,6 +36,58 @@
       </ul>
     </nav>
   </header>
+
+  <!-- Brand Title Under Header in Middle -->
+  <main class="main-content">
+    <h1 class="brand-title">Campu<span class="highlight-s">s</span>wap</h1>
+  </main>
+
+  <!-- Highlighted Content: Infinite Running Stripe -->
+  <section class="highlight-section">
+    <div class="highlight-container">
+      <div class="stripe-track">
+        <!-- 4 Original Content Items -->
+        <div class="stripe-group">
+          <div class="demo-card">
+            <img src="assets/demo.png" alt="Demo Content 1">
+            <p class="card-title">Engineering Notes</p>
+          </div>
+          <div class="demo-card">
+            <img src="assets/demo.png" alt="Demo Content 2">
+            <p class="card-title">Scientific Calculators</p>
+          </div>
+          <div class="demo-card">
+            <img src="assets/demo.png" alt="Demo Content 3">
+            <p class="card-title">Semester Textbooks</p>
+          </div>
+          <div class="demo-card">
+            <img src="assets/demo.png" alt="Demo Content 4">
+            <p class="card-title">Lab & Drawing Kits</p>
+          </div>
+        </div>
+
+        <!-- 4 Duplicate Items for Seamless Infinite Loop -->
+        <div class="stripe-group">
+          <div class="demo-card">
+            <img src="assets/demo.png" alt="Demo Content 1">
+            <p class="card-title">Engineering Notes</p>
+          </div>
+          <div class="demo-card">
+            <img src="assets/demo.png" alt="Demo Content 2">
+            <p class="card-title">Scientific Calculators</p>
+          </div>
+          <div class="demo-card">
+            <img src="assets/demo.png" alt="Demo Content 3">
+            <p class="card-title">Semester Textbooks</p>
+          </div>
+          <div class="demo-card">
+            <img src="assets/demo.png" alt="Demo Content 4">
+            <p class="card-title">Lab & Drawing Kits</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </body>
 </html>
