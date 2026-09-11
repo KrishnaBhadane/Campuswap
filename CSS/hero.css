@@ -1,0 +1,137 @@
+/* Hero Section */
+.hero {
+  padding: 16px 0 8px;
+}
+
+/* Slider Container (Mobile: ~92% width) */
+.hero-slider {
+  width: 92%;
+  max-width: 1050px;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Slider Track (Mobile: 1 banner at a time) */
+.slider-track {
+  display: flex;
+  width: 100%;
+  animation: slideMobile 15s infinite ease-in-out;
+}
+
+/* Individual Slide (Mobile: exactly 1 slide at full width) */
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 100%;
+  height: 190px;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Slide Text Overlay */
+.slide-content {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.15) 60%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+
+.slide-content h2 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile Slide Animation (1 banner at a time) */
+@keyframes slideMobile {
+  0%, 28%   { transform: translateX(0); }
+  33%, 61%  { transform: translateX(-100%); }
+  66%, 95%  { transform: translateX(-200%); }
+  100%      { transform: translateX(-300%); }
+}
+
+/* Slider Dots Indicator */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #d1d5db;
+  transition: all 0.3s;
+}
+
+/* Synchronized Dot Animations */
+.dot-1 { animation: dot1 15s infinite; }
+.dot-2 { animation: dot2 15s infinite; }
+.dot-3 { animation: dot3 15s infinite; }
+
+@keyframes dot1 {
+  0%, 28%   { background-color: #f9be06; width: 20px; border-radius: 4px; }
+  33%, 100% { background-color: #d1d5db; width: 8px; border-radius: 50%; }
+}
+
+@keyframes dot2 {
+  0%, 28%   { background-color: #d1d5db; width: 8px; border-radius: 50%; }
+  33%, 61%  { background-color: #f9be06; width: 20px; border-radius: 4px; }
+  66%, 100% { background-color: #d1d5db; width: 8px; border-radius: 50%; }
+}
+
+@keyframes dot3 {
+  0%, 61%   { background-color: #d1d5db; width: 8px; border-radius: 50%; }
+  66%, 95%  { background-color: #f9be06; width: 20px; border-radius: 4px; }
+  100%      { background-color: #d1d5db; width: 8px; border-radius: 50%; }
+}
+
+/* Desktop Styles (min-width: 768px): Show TWO Banners Side-by-Side */
+@media (min-width: 768px) {
+  .hero {
+    padding: 24px 0 12px;
+  }
+
+  .slider-track {
+    gap: 16px;
+    animation: slideDesktop 15s infinite ease-in-out;
+  }
+
+  /* Two banners side-by-side */
+  .slide {
+    flex: 0 0 calc(50% - 8px);
+    min-width: calc(50% - 8px);
+    height: 260px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    padding: 24px 28px;
+  }
+
+  .slide-content h2 {
+    font-size: 24px;
+  }
+}
+
+/* Desktop Slide Animation (Advances smoothly with 2 banners visible) */
+@keyframes slideDesktop {
+  0%, 28%   { transform: translateX(0); }
+  33%, 61%  { transform: translateX(calc(-50% - 8px)); }
+  66%, 95%  { transform: translateX(calc(-100% - 16px)); }
+  100%      { transform: translateX(calc(-150% - 24px)); }
+}

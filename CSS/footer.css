@@ -1,0 +1,98 @@
+/* Footer Section */
+.footer {
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  padding: 24px 0 16px;
+  margin-top: 24px;
+}
+
+/* Aligned Container */
+.footer-container {
+  width: 92%;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+/* Mobile: Stack Content Vertically */
+.footer-main {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Branding */
+.footer-logo {
+  font-family: 'Lobster Two', cursive;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  display: inline-block;
+}
+
+.footer-logo .highlight-s {
+  color: #f9be06;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* Quick Links */
+.footer-heading {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  font-size: 13px;
+  color: #4b5563;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #f9be06;
+}
+
+/* Bottom Line Copyright */
+.footer-bottom {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* Desktop View (min-width: 768px): Brand Left, Links Right */
+@media (min-width: 768px) {
+  .footer {
+    padding: 32px 0 20px;
+    margin-top: 36px;
+  }
+
+  .footer-main {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .footer-logo {
+    font-size: 26px;
+  }
+
+  .footer-bottom {
+    margin-top: 24px;
+    text-align: center;
+  }
+}

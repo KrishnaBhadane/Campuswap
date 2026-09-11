@@ -1,0 +1,182 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #111827;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Header */
+.sell-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 12px 4%;
+}
+
+.header-container {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-link {
+  text-decoration: none;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #f9be06;
+}
+
+/* Page Container (Mobile-First) */
+.sell-container {
+  width: 92%;
+  max-width: 700px;
+  margin: 20px auto 40px;
+}
+
+/* Card */
+.sell-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px 16px;
+}
+
+/* Headings */
+.sell-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.sell-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+/* Form Layout */
+.sell-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Inputs, Select, Textarea */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #f9be06;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* File Input Styling */
+.form-group input[type="file"] {
+  padding: 8px 12px;
+  background-color: #f9fafb;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Submit Button */
+.btn-post {
+  margin-top: 8px;
+  width: 100%;
+  background-color: #f9be06;
+  color: #000000;
+  border: none;
+  border-radius: 24px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-post:hover {
+  opacity: 0.9;
+}
+
+/* Simple Footer */
+.sell-footer {
+  text-align: center;
+  padding: 20px 16px;
+  font-size: 12px;
+  color: #9ca3af;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Desktop View (min-width: 768px) */
+@media (min-width: 768px) {
+  .sell-header {
+    padding: 14px 4%;
+  }
+
+  .sell-container {
+    margin: 36px auto 60px;
+  }
+
+  .sell-card {
+    padding: 32px 36px;
+    border-radius: 20px;
+  }
+
+  .sell-title {
+    font-size: 26px;
+  }
+
+  .sell-subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .btn-post {
+    padding: 14px;
+    font-size: 16px;
+  }
+}

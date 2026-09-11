@@ -7,87 +7,269 @@
   <!-- Google Font: Lobster Two -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="CSS/header.css">
   <link rel="stylesheet" href="CSS/logo_name.css">
+  <link rel="stylesheet" href="CSS/hero.css">
+  <link rel="stylesheet" href="CSS/recently_added.css">
+  <link rel="stylesheet" href="CSS/campus_essentials.css">
   <link rel="stylesheet" href="CSS/highlighted_content.css">
+  <link rel="stylesheet" href="CSS/study_material.css">
+  <link rel="stylesheet" href="CSS/footer.css">
 </head>
 <body>
 
-  <!-- Plain Header -->
+  <!-- Header -->
   <header class="header">
-    <a href="#">
-      <img src="assets/logo.png" alt="Logo" class="logo">
+    <!-- Brand (Logo + Name) -->
+    <a href="#" class="brand">
+      <img src="assets/logo.png" alt="Campuswap Logo" class="logo">
+      <span class="logo-name">Campu<span class="highlight-s">s</span>wap</span>
     </a>
 
-    <!-- Search Bar -->
+    <!-- Search Bar & Mobile Sell -->
     <div class="search-box">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
       <input type="text" class="search-input" placeholder="Search books, notes, materials...">
+      <a href="sell.html" class="mobile-sell-btn">+ Sell</a>
     </div>
 
-    <nav>
-      <ul class="nav-links">
-        <li><a href="#material">Material</a></li>
-        <li><a href="#login">Login</a></li>
-      </ul>
+    <!-- Navigation Links -->
+    <nav class="nav-links">
+      <a href="sell.html" class="nav-item sell-btn">+ Sell</a>
+      <a href="#login" class="nav-item login-btn">Login</a>
     </nav>
   </header>
 
-  <!-- Brand Title Under Header in Middle -->
-  <main class="main-content">
-    <h1 class="brand-title">Campu<span class="highlight-s">s</span>wap</h1>
-  </main>
-
-  <!-- Highlighted Content: Infinite Running Stripe -->
-  <section class="highlight-section">
-    <div class="highlight-container">
-      <div class="stripe-track">
-        <!-- 4 Original Content Items -->
-        <div class="stripe-group">
-          <div class="demo-card">
-            <img src="assets/demo.png" alt="Demo Content 1">
-            <p class="card-title">Engineering Notes</p>
-          </div>
-          <div class="demo-card">
-            <img src="assets/demo.png" alt="Demo Content 2">
-            <p class="card-title">Scientific Calculators</p>
-          </div>
-          <div class="demo-card">
-            <img src="assets/demo.png" alt="Demo Content 3">
-            <p class="card-title">Semester Textbooks</p>
-          </div>
-          <div class="demo-card">
-            <img src="assets/demo.png" alt="Demo Content 4">
-            <p class="card-title">Lab & Drawing Kits</p>
+  <!-- Hero / Advertisement Slider -->
+  <section class="hero">
+    <div class="hero-slider">
+      <div class="slider-track">
+        <!-- Slide 1 -->
+        <div class="slide">
+          <img src="assets/hero1.jpg" alt="Buy & Sell Inside Campus">
+          <div class="slide-content">
+            <h2></h2>
           </div>
         </div>
 
-        <!-- 4 Duplicate Items for Seamless Infinite Loop -->
-        <div class="stripe-group">
-          <div class="demo-card">
-            <img src="assets/demo.png" alt="Demo Content 1">
-            <p class="card-title">Engineering Notes</p>
+        <!-- Slide 2 -->
+        <div class="slide">
+          <img src="assets/hero2.jpg" alt="Everything For Your Semester">
+          <div class="slide-content">
+            <h2></h2>
           </div>
-          <div class="demo-card">
-            <img src="assets/demo.png" alt="Demo Content 2">
-            <p class="card-title">Scientific Calculators</p>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+          <img src="assets/hero1.jpg" alt="Students Buying From Students">
+          <div class="slide-content">
+            <h2></h2>
           </div>
-          <div class="demo-card">
-            <img src="assets/demo.png" alt="Demo Content 3">
-            <p class="card-title">Semester Textbooks</p>
+        </div>
+
+        <!-- Slide 1 Clone -->
+        <div class="slide">
+          <img src="assets/hero1.jpg" alt="Buy & Sell Inside Campus">
+          <div class="slide-content">
+            <h2></h2>
           </div>
-          <div class="demo-card">
-            <img src="assets/demo.png" alt="Demo Content 4">
-            <p class="card-title">Lab & Drawing Kits</p>
+        </div>
+
+        <!-- Slide 2 Clone (For Seamless 2-Banner Desktop Loop) -->
+        <div class="slide">
+          <img src="assets/hero2.jpg" alt="Everything For Your Semester">
+          <div class="slide-content">
+            <h2></h2>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- 3 Slider Dots Indicator -->
+    <div class="slider-dots">
+      <span class="dot dot-1"></span>
+      <span class="dot dot-2"></span>
+      <span class="dot dot-3"></span>
+    </div>
   </section>
+
+  <!-- Recently Added Section -->
+  <section class="recent-section">
+    <div class="recent-header">
+      <div>
+        <h2 class="recent-title">Recently Added</h2>
+        <p class="recent-subtitle">Fresh finds from your campus</p>
+      </div>
+      <a href="#view-all" class="view-all">View all &rarr;</a>
+    </div>
+
+    <div class="cards-track">
+      <!-- Card 1 -->
+      <div class="product-card">
+        <img src="assets/demo.png" alt="Scientific Calculator" class="card-img">
+        <h3 class="product-name">Scientific Calculator</h3>
+        <p class="product-price">₹1,200</p>
+        <span class="product-condition">Like New</span>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card">
+        <img src="assets/demo.png" alt="Semester Books" class="card-img">
+        <h3 class="product-name">Semester Books</h3>
+        <p class="product-price">₹500</p>
+        <span class="product-condition">Good</span>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card">
+        <img src="assets/demo.png" alt="Project" class="card-img">
+        <h3 class="product-name">Project</h3>
+        <p class="product-price">₹3,500</p>
+        <span class="product-condition">Good</span>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="product-card">
+        <img src="assets/demo.png" alt="Lab Coat" class="card-img">
+        <h3 class="product-name">Lab Coat</h3>
+        <p class="product-price">₹700</p>
+        <span class="product-condition">Like New</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Campus Essentials Section -->
+  <section class="essentials-section">
+    <h2 class="essentials-title">Campus Essentials</h2>
+
+    <div class="essentials-grid">
+      <!-- Item 1 -->
+      <a href="#hostel" class="essential-card">
+        <img src="assets/demo.png" alt="Hostel Essentials" class="essential-img">
+        <div class="essential-info">
+          <h3>Hostel Essentials</h3>
+          <p>Bedsheets, Bottles, Organizers &amp; more</p>
+        </div>
+        <span class="essential-arrow">&rsaquo;</span>
+      </a>
+
+      <!-- Item 2 -->
+      <a href="#electronics" class="essential-card">
+        <img src="assets/demo.png" alt="Electronics" class="essential-img">
+        <div class="essential-info">
+          <h3>Electronics</h3>
+          <p>Laptops, Headphones, Chargers &amp; more</p>
+        </div>
+        <span class="essential-arrow">&rsaquo;</span>
+      </a>
+
+      <!-- Item 3 -->
+      <a href="#stationery" class="essential-card">
+        <img src="assets/demo.png" alt="Stationery" class="essential-img">
+        <div class="essential-info">
+          <h3>Stationery</h3>
+          <p>Pens, Notebooks, Files &amp; more</p>
+        </div>
+        <span class="essential-arrow">&rsaquo;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Highlighted Content Section -->
+  <section class="highlight-section">
+    <!-- Wide Highlight Card -->
+    <div class="highlight-card">
+      <img src="assets/demo_highlight.png" alt="Featured on Campuswap" class="highlight-img">
+      <div class="highlight-content">
+        <span class="highlight-badge">Featured on Campuswap</span>
+        <h2 class="highlight-title">Find something worth checking out.</h2>
+        <a href="#explore" class="btn-explore">Explore &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Moving Stripe Marquee -->
+    <div class="marquee-bar">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span>New listings &bull; Semester books &bull; Campus deals &bull; Sell unused items &bull;</span>
+          <span>New listings &bull; Semester books &bull; Campus deals &bull; Sell unused items &bull;</span>
+        </div>
+        <div class="marquee-group">
+          <span>New listings &bull; Semester books &bull; Campus deals &bull; Sell unused items &bull;</span>
+          <span>New listings &bull; Semester books &bull; Campus deals &bull; Sell unused items &bull;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Study Material Section -->
+  <section class="material-section">
+    <div class="material-header">
+      <h2 class="material-title">Study Material</h2>
+      <p class="material-subtext">Notes, books and semester resources</p>
+    </div>
+
+    <div class="material-track">
+      <!-- Card 1 -->
+      <div class="material-card">
+        <img src="assets/demo.png" alt="DBMS Notes" class="material-img">
+        <h3 class="material-card-title">DBMS Notes</h3>
+        <span class="material-tag">Semester 4</span>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="material-card">
+        <img src="assets/demo.png" alt="Data Structures" class="material-img">
+        <h3 class="material-card-title">Data Structures</h3>
+        <span class="material-tag">Semester 3</span>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="material-card">
+        <img src="assets/demo.png" alt="Operating System" class="material-img">
+        <h3 class="material-card-title">Operating System</h3>
+        <span class="material-tag">Semester 4</span>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="material-card">
+        <img src="assets/demo.png" alt="Previous Year Papers" class="material-img">
+        <h3 class="material-card-title">Previous Year Papers</h3>
+        <span class="material-tag">All Semesters</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Main Content -->
+      <div class="footer-main">
+        <!-- Brand Info -->
+        <div class="footer-brand">
+          <span class="footer-logo">Campu<span class="highlight-s">s</span>wap</span>
+          <p class="footer-tagline">Made for students, by students.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-nav">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#material">Material</a></li>
+            <li><a href="sell.html">Sell</a></li>
+            <li><a href="#login">Login</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Line -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 Campuswap. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>

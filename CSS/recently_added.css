@@ -1,0 +1,149 @@
+/* Recently Added Section with Subtle Pastel Background */
+.recent-section {
+  width: 92%;
+  max-width: 1050px;
+  margin: 20px auto;
+  background: linear-gradient(135deg, #fff7fb, #f7f5ff);
+  border: 1px solid #f3eefa;
+  border-radius: 16px;
+  padding: 16px 12px 14px;
+  box-sizing: border-box;
+}
+
+/* Header: Title on left, View all on right */
+.recent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 12px;
+  padding: 0 2px;
+}
+
+.recent-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.recent-subtitle {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.view-all {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  text-decoration: none;
+}
+
+.view-all:hover {
+  color: #f9be06;
+}
+
+/* Horizontal Scroll Track */
+.cards-track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+  -webkit-overflow-scrolling: touch;
+}
+
+.cards-track::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+/* Compact Mobile Card: ~3 full cards + peek of 4th */
+.product-card {
+  flex: 0 0 clamp(105px, 28vw, 130px);
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 7px;
+  box-sizing: border-box;
+}
+
+.card-img {
+  width: 100%;
+  height: 76px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.product-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #111827;
+  margin-top: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+  margin: 2px 0;
+}
+
+.product-condition {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 500;
+  background-color: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fef3c7;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+/* Desktop View (min-width: 768px) */
+@media (min-width: 768px) {
+  .recent-section {
+    margin: 32px auto;
+    padding: 22px 24px;
+    border-radius: 20px;
+  }
+
+  .recent-title {
+    font-size: 22px;
+  }
+
+  .cards-track {
+    gap: 16px;
+    overflow-x: visible;
+  }
+
+  .product-card {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .card-img {
+    height: 130px;
+    border-radius: 8px;
+  }
+
+  .product-name {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .product-price {
+    font-size: 16px;
+    margin: 4px 0;
+  }
+
+  .product-condition {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+}

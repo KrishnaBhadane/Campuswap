@@ -6,82 +6,127 @@
   font-family: Arial, sans-serif;
 }
 
-body {
+html, body {
+  width: 100%;
+  overflow-x: hidden;
   background-color: #ffffff;
 }
 
-/* Plain White Header */
+/* Header Container (Mobile-First) */
 .header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
-  padding: 15px 40px;
+  padding: 12px 4%;
   border-bottom: 1px solid #e5e5e5;
 }
 
-/* Header Logo */
-.logo {
-  height: 45px;
-  width: auto;
-  display: block;
-}
-
-/* Search Bar */
+/* Search Bar & Mobile Sell (Mobile: Row 2) */
 .search-box {
+  order: 1;
+  width: 100%;
+  margin-top: 10px;
   display: flex;
   align-items: center;
-  background-color: #f3f4f6;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 8px 14px;
-  width: 100%;
-  max-width: 420px;
-  margin: 0 20px;
-}
-
-.search-box:focus-within {
-  border-color: #d1d5db;
-  background-color: #ffffff;
-}
-
-.search-box svg {
-  margin-right: 10px;
-  color: #6b7280;
-  flex-shrink: 0;
+  gap: 8px;
 }
 
 .search-input {
-  border: none;
-  background: transparent;
-  outline: none;
+  flex: 1;
+  min-width: 0;
   width: 100%;
-  font-size: 14px;
-  color: #111827;
+  padding: 9px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  background-color: #f9fafb;
+  font-size: 13px;
+  outline: none;
 }
 
-.search-input::placeholder {
-  color: #9ca3af;
+.search-input:focus {
+  border-color: #f9be06;
+  background-color: #ffffff;
+}
+
+/* "+ Sell" Button Style (Mobile & Desktop) */
+.mobile-sell-btn,
+.sell-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9be06;
+  color: #000000;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.mobile-sell-btn:hover,
+.sell-btn:hover {
+  opacity: 0.9;
+  color: #000000;
+}
+
+.mobile-sell-btn:active,
+.sell-btn:active {
+  opacity: 0.85;
 }
 
 /* Navigation Links */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 25px;
-  list-style: none;
-  flex-shrink: 0;
+  gap: 18px;
 }
 
-.nav-links a {
+.nav-item {
+  display: none; /* Hidden on mobile */
   text-decoration: none;
   color: #000000;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
 }
 
-.nav-links a:hover {
-  opacity: 0.7;
+.nav-item:hover {
+  color: #f9be06;
 }
 
+/* Login link visible on mobile and desktop */
+.login-btn {
+  display: inline-block;
+}
 
+/* Desktop Header (min-width: 768px) */
+@media (min-width: 768px) {
+  .header {
+    flex-wrap: nowrap;
+    padding: 14px max(4%, calc((100% - 1050px) / 2));
+  }
+
+  .search-box {
+    order: 0;
+    width: auto;
+    flex: 1;
+    max-width: 480px;
+    margin: 0 30px;
+  }
+
+  .mobile-sell-btn {
+    display: none;
+  }
+
+  .nav-item {
+    display: inline-block; /* Show Material and Sell on desktop */
+  }
+
+  .sell-btn {
+    display: inline-flex; /* Show yellow pill Sell button on desktop */
+  }
+}

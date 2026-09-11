@@ -1,68 +1,142 @@
 /* Highlighted Content Section */
 .highlight-section {
-  display: flex;
-  justify-content: center;
-  padding: 40px 20px;
+  width: 92%;
+  max-width: 1050px;
+  margin: 20px auto;
 }
 
-/* Background Rectangle: Very Light Pink to Very Light Violet */
-.highlight-container {
-  width: 100%;
-  max-width: 1100px;
-  background: linear-gradient(135deg, #fdf2f8, #f5f3ff);
-  border: 1px solid #f3e8ff;
-  border-radius: 20px;
-  padding: 24px 0;
+/* Wide Promotional Card */
+.highlight-card {
+  position: relative;
+  height: 200px;
+  border-radius: 16px;
   overflow: hidden;
-  user-select: none;
-}
-
-/* Continuous Infinite Stripe Track */
-.stripe-track {
   display: flex;
-  width: max-content;
-  animation: scrollStripe 16s linear infinite;
+  align-items: center;
+  border: 1px solid #e5e7eb;
 }
 
-/* Group of 4 Items */
-.stripe-group {
-  display: flex;
-  gap: 20px;
-  padding-right: 20px;
-}
-
-/* Content Card */
-.demo-card {
-  width: 240px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.demo-card img {
+.highlight-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 140px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  object-position: right center;
   display: block;
 }
 
-.card-title {
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #111827;
+/* Text on the Left with Soft Transparent Gradient */
+.highlight-content {
+  position: relative;
+  z-index: 1;
+  max-width: 65%;
+  height: 100%;
+  padding: 20px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-/* Seamless Infinite Sliding Animation */
-@keyframes scrollStripe {
-  0% {
-    transform: translateX(0);
+.highlight-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #f9be06;
+  margin-bottom: 6px;
+}
+
+.highlight-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.btn-explore {
+  display: inline-block;
+  background-color: #f9be06;
+  color: #000000;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.btn-explore:hover {
+  opacity: 0.85;
+}
+
+/* Moving Stripe Marquee */
+.marquee-bar {
+  margin-top: 14px;
+  background: linear-gradient(135deg, #fff7fb, #f7f5ff);
+  border: 1px solid #f3eefa;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 8px 0;
+  user-select: none;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 18s linear infinite;
+}
+
+.marquee-group {
+  display: flex;
+  gap: 20px;
+  padding-right: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Desktop View (min-width: 768px) */
+@media (min-width: 768px) {
+  .highlight-section {
+    margin: 32px auto;
   }
-  100% {
-    transform: translateX(-50%);
+
+  .highlight-card {
+    height: 300px;
+    border-radius: 20px;
+  }
+
+  .highlight-content {
+    max-width: 48%;
+    padding: 36px;
+  }
+
+  .highlight-badge {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .highlight-title {
+    font-size: 26px;
+    margin-bottom: 18px;
+  }
+
+  .btn-explore {
+    font-size: 14px;
+    padding: 9px 20px;
+  }
+
+  .marquee-group {
+    font-size: 13px;
+    gap: 30px;
+    padding-right: 30px;
   }
 }

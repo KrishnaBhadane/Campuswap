@@ -1,16 +1,24 @@
-/* Brand Name (Logo Name) Under Header */
-.main-content {
-  text-align: center;
-  padding-top: 60px;
+/* Logo & Brand Name Styling */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
 }
 
-.brand-title {
+.logo {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.logo-name {
   font-family: 'Lobster Two', cursive;
-  font-size: 72px;
+  font-size: 26px;
   font-weight: 700;
   color: #000000;
 }
 
-.brand-title .highlight-s {
+.highlight-s {
   color: #f9be06;
 }

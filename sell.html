@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell Item - Campuswap</title>
+  <!-- Google Font: Lobster Two -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/logo_name.css">
+  <link rel="stylesheet" href="CSS/sell.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="sell-header">
+    <div class="header-container">
+      <a href="index.html" class="brand">
+        <img src="assets/logo.png" alt="Campuswap Logo" class="logo">
+        <span class="logo-name">Campu<span class="highlight-s">s</span>wap</span>
+      </a>
+      <a href="index.html" class="back-link">&larr; Back to Home</a>
+    </div>
+  </header>
+
+  <!-- Sell Form Section -->
+  <main class="sell-container">
+    <div class="sell-card">
+      <h1 class="sell-title">Sell an Item</h1>
+      <p class="sell-subtitle">Post your unused items for students across campus</p>
+
+      <form class="sell-form" action="#" method="post">
+        <!-- Item Name -->
+        <div class="form-group">
+          <label for="item-name">Item Name</label>
+          <input type="text" id="item-name" name="itemName" placeholder="e.g. Scientific Calculator fx-991EX" required>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Select a category</option>
+            <option value="books">Books &amp; Study Material</option>
+            <option value="electronics">Electronics &amp; Gadgets</option>
+            <option value="stationery">Stationery &amp; Drafting</option>
+            <option value="hostel">Hostel Essentials</option>
+            <option value="cycles">Cycles &amp; Mobility</option>
+            <option value="other">Other Campus Items</option>
+          </select>
+        </div>
+
+        <!-- Price -->
+        <div class="form-group">
+          <label for="price">Price (₹)</label>
+          <input type="number" id="price" name="price" placeholder="e.g. 500" min="0" required>
+        </div>
+
+        <!-- Condition -->
+        <div class="form-group">
+          <label for="condition">Condition</label>
+          <select id="condition" name="condition" required>
+            <option value="" disabled selected>Select condition</option>
+            <option value="brand-new">Brand New (Unused)</option>
+            <option value="like-new">Like New (Barely used)</option>
+            <option value="good">Good (Fully functional)</option>
+            <option value="fair">Fair (Usable condition)</option>
+          </select>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="4" placeholder="Mention semester, edition, physical condition, reason for selling..."></textarea>
+        </div>
+
+        <!-- Upload Image -->
+        <div class="form-group">
+          <label for="item-image">Upload Image</label>
+          <input type="file" id="item-image" name="itemImage" accept="image/*" class="file-input">
+        </div>
+
+        <!-- Seller Name -->
+        <div class="form-group">
+          <label for="seller-name">Seller Name</label>
+          <input type="text" id="seller-name" name="sellerName" placeholder="e.g. Rahul Sharma" required>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="form-group">
+          <label for="contact-number">Contact Number</label>
+          <input type="tel" id="contact-number" name="contactNumber" placeholder="e.g. 9876543210" required>
+        </div>
+
+        <!-- Post Item Button -->
+        <button type="submit" class="btn-post">Post Item</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Simple Footer -->
+  <footer class="sell-footer">
+    <p>&copy; 2026 Campuswap. Made for students, by students.</p>
+  </footer>
+
+</body>
+</html>
