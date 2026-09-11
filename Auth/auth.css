@@ -37,7 +37,7 @@ h2 {
   color: #333;
 }
 
-/* Form & Rectangle Blocks */
+/* Form Layout */
 form {
   display: flex;
   flex-direction: column;
@@ -45,7 +45,7 @@ form {
   text-align: left;
 }
 
-/* Each Field in a Clean Rectangle Box */
+/* Rectangle Input Boxes */
 .box {
   background: #fafafa;
   border: 1px solid #ccc;
@@ -61,22 +61,26 @@ form {
   margin-bottom: 5px;
 }
 
-.box input[type="email"],
-.box input[type="password"],
-.box input[type="text"] {
+.box input {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
   outline: none;
+  background-color: #ffffff;
 }
 
 .box input:focus {
   border-color: #2563eb;
 }
 
-/* Forgot Password Rectangle Box */
+/* ID Card File Input */
+.box input[type="file"] {
+  cursor: pointer;
+}
+
+/* Remember Me & Forgot Password (Login) */
 .forgot-box {
   display: flex;
   justify-content: space-between;
@@ -87,6 +91,13 @@ form {
 .forgot-box label {
   margin-bottom: 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.forgot-box input[type="checkbox"] {
+  width: auto;
 }
 
 .forgot-box a {

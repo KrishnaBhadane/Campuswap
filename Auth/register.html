@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register - Campuswap</title>
-  <link rel="stylesheet" href="register.css">
+  <link rel="stylesheet" href="auth.css">
 </head>
 <body>
 
@@ -38,7 +38,13 @@
         <input type="password" id="cpassword" placeholder="Confirm password" required>
       </div>
 
-      <!-- 5. Submit Button -->
+      <!-- 5. College ID Card Upload Box -->
+      <div class="box">
+        <label for="id-card">College ID Card (For Authentication)</label>
+        <input type="file" id="id-card" accept="image/*" required>
+      </div>
+
+      <!-- 6. Submit Button -->
       <button type="submit" class="btn">Sign Up</button>
     </form>
 
