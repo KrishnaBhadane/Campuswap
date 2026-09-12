@@ -61,7 +61,8 @@ form {
   margin-bottom: 5px;
 }
 
-.box input {
+.box input,
+.box select {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
@@ -71,7 +72,8 @@ form {
   background-color: #ffffff;
 }
 
-.box input:focus {
+.box input:focus,
+.box select:focus {
   border-color: #2563eb;
 }
 

@@ -101,6 +101,16 @@ html, body {
 /* Login link visible on mobile and desktop */
 .login-btn {
   display: inline-block;
+  background-color: #2c2ea1;
+  color : white;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 26px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
 }
 
 /* Desktop Header (min-width: 768px) */

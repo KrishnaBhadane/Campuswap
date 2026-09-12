@@ -224,123 +224,123 @@ main {
 /* ================= BUTTONS ================= */
 
 .action-buttons {
-
     display: flex;
-
+    flex-wrap: wrap;
+    align-items: center;
     gap: 12px;
-
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
-.buy-btn {
-
+/* Primary WhatsApp Button */
+.whatsapp-btn {
     flex: 1;
-
+    min-width: 220px;
     background: #ffbf00;
-
+    color: #111;
     border: none;
-
     border-radius: 8px;
-
-    padding: 14px;
-
+    padding: 14px 20px;
     font-size: 16px;
-
     font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.buy-btn:hover {
-
+.whatsapp-btn:hover {
     background: #eaaa00;
 }
 
-
-.contact-btn {
-
-    flex: 1;
-
-    background: white;
-
-    border: 1px solid #222;
-
+/* Secondary Report Seller Button */
+.report-btn {
+    background: transparent;
+    color: #dc2626;
+    border: 1px solid #dc2626;
     border-radius: 8px;
-
-    padding: 14px;
-
-    font-size: 16px;
-
-    font-weight: bold;
+    padding: 13px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
 }
 
-.contact-btn:hover {
-
-    background: #f5f5f5;
+.report-btn:hover {
+    background: #fef2f2;
 }
 
+/* Contact Note */
+.contact-note {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
 
 /* ================= SELLER ================= */
 
 .seller-box {
-
     border: 1px solid #e5e7eb;
-
     border-radius: 12px;
-
     padding: 18px;
 }
 
 .seller-box h3 {
-
     margin-bottom: 15px;
 }
 
 .seller {
-
     display: flex;
-
     align-items: center;
-
     gap: 12px;
 }
 
 .seller-avatar {
-
     width: 45px;
     height: 45px;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: #ffbf00;
-
     font-weight: bold;
-
     font-size: 18px;
+    flex-shrink: 0;
 }
 
 .seller h4 {
-
     margin-bottom: 4px;
 }
 
-.seller p {
-
+.seller-college {
     font-size: 13px;
-
-    color: #777;
+    color: #333;
+    font-weight: 500;
 }
 
-.seller-location {
-
-    font-size: 13px;
-
+.seller-dept {
+    font-size: 12px;
     color: #777;
+    margin-top: 2px;
+}
 
-    margin-top: 12px;
+.seller-meta {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: #555;
+}
+
+.seller-meta strong {
+    color: #222;
 }
 
 
