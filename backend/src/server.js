@@ -6,6 +6,7 @@ import connectDB from '../../database/db.js';
 try {
   const envFile = new URL('../.env', import.meta.url);
   if (existsSync(envFile)) loadEnvFile(envFile);
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) throw new Error('JWT_SECRET must contain at least 32 characters.');
 
   const port = Number(process.env.PORT || 5000);
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('PORT must be between 1 and 65535.');

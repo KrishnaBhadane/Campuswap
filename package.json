@@ -11,7 +11,13 @@
     "dev": "node --watch backend/src/server.js"
   },
   "dependencies": {
+    "argon2": "^0.45.1",
+    "cloudinary": "^2.11.0",
+    "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
-    "mongoose": "^9.11.0"
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.11.0",
+    "multer": "^2.4.0",
+    "sharp": "^0.35.5"
   }
 }
