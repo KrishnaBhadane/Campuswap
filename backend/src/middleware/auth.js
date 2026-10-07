@@ -7,7 +7,8 @@ export function cookieOptions() {
 
 export function checkOrigin(req, res, next) {
   const origin = req.get('origin');
-  if (req.get('sec-fetch-site') === 'cross-site' || (origin && origin !== process.env.FRONTEND_URL)) {
+  const isDevLocal = process.env.NODE_ENV !== 'production' && origin && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+  if (req.get('sec-fetch-site') === 'cross-site' || (origin && origin !== process.env.FRONTEND_URL && !isDevLocal)) {
     return res.status(403).json({ success: false, message: 'Origin not allowed' });
   }
   next();

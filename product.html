@@ -14,127 +14,118 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/logo_name.css">
-    <link rel="stylesheet" href="CSS/hero.css">
-    <link rel="stylesheet" href="CSS/recently_added.css">
-    <link rel="stylesheet" href="CSS/campus_essentials.css">
-    <link rel="stylesheet" href="CSS/highlighted_content.css">
-    <link rel="stylesheet" href="CSS/study_material.css">
     <link rel="stylesheet" href="CSS/footer.css">
-    <link rel="stylesheet" href="product.css">
+    <style>
+        html.auth-checking body {
+            visibility: hidden;
+        }
+        .campus-notice {
+            background-color: #fee2e2;
+            color: #991b1b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        document.documentElement.classList.add('auth-checking');
+        fetch('/api/auth/me')
+            .then(function(res) {
+                if (!res.ok) throw new Error('Unauthenticated');
+                return res.json();
+            })
+            .then(function(data) {
+                if (data && data.success && data.user) {
+                    window.__currentUser = data.user;
+                    document.documentElement.classList.remove('auth-checking');
+                    document.dispatchEvent(new CustomEvent('campuswap:user-ready', { detail: data.user }));
+                } else {
+                    window.location.replace('Auth/user.html#login?redirect=' + encodeURIComponent(window.location.pathname.replace(/^\//, '') + window.location.search));
+                }
+            })
+            .catch(function() {
+                window.location.replace('Auth/user.html#login');
+            });
+    </script>
 </head>
 
 <body>
 
     <!-- ================= HEADER ================= -->
-
-    <!-- Header -->
     <header class="header">
-        <!-- Brand (Logo + Name) -->
         <a href="index.html" class="brand">
             <img src="assets/logo.png" alt="Campuswap Logo" class="logo">
             <span class="logo-name">Campu<span class="highlight-s">s</span>wap</span>
         </a>
 
-        <!-- Search Bar & Mobile Sell -->
         <div class="search-box">
             <input type="text" class="search-input" placeholder="Search books, notes, materials...">
             <a href="sell.html" class="mobile-sell-btn">+ Sell</a>
         </div>
 
-        <!-- Navigation Links -->
         <nav class="nav-links">
+            <span class="campus-badge" id="header-campus-badge">Campus</span>
+            <a href="favorites.html" class="nav-item" style="font-weight: 600; color: #334155;">Saved</a>
+            <a href="my-listings.html" class="nav-item" style="font-weight: 600; color: #334155;">My Listings</a>
             <a href="sell.html" class="nav-item sell-btn">+ Sell</a>
-            <a href="Auth/user.html#login" class="nav-item login-btn">Login</a>
+            <button type="button" class="logout-btn" id="logout-btn">Logout</button>
         </nav>
     </header>
 
     <!-- ================= MAIN PRODUCT SECTION ================= -->
-
     <main>
+        <a href="index.html" class="back">&larr; Back to marketplace</a>
 
-        <!-- Back Button -->
-        <a href="index.html" class="back">← Back to products</a>
+        <div id="campus-error" class="campus-notice"></div>
 
-
-        <div class="product-container">
-
-            <!-- ================= PRODUCT IMAGE ================= -->
-
+        <div class="product-container" id="product-content">
+            <!-- ================= PRODUCT IMAGE (MAX 2 IMAGES) ================= -->
             <div class="product-image-section">
+                <img id="main-product-img" src="assets/demo.png" alt="Product image" style="object-fit: cover; max-height: 420px; width: 100%;">
 
-                <img src="assets/demo.png" alt="Scientific Calculator">
-
-                <!-- Small image thumbnails -->
-                <div class="thumbnails">
-
-                    <div class="thumbnail active">
-                        <img src="assets/demo.png" alt="Product">
+                <!-- Thumbnails: only shown if exactly 2 images exist -->
+                <div class="thumbnails" id="thumbnails-container" style="display: none;">
+                    <div class="thumbnail active" id="thumb-0">
+                        <img id="thumb-img-0" src="" alt="Photo 1">
                     </div>
-
-                    <div class="thumbnail">
-                        <img src="assets/demo.png" alt="Product">
+                    <div class="thumbnail" id="thumb-1">
+                        <img id="thumb-img-1" src="" alt="Photo 2">
                     </div>
-
-                    <div class="thumbnail">
-                        <img src="assets/demo.png" alt="Product">
-                    </div>
-
                 </div>
-
             </div>
 
-
             <!-- ================= PRODUCT INFORMATION ================= -->
-
             <div class="product-info">
+                <p class="category" id="product-category">Category</p>
+                <h1 id="product-title">Item Title</h1>
 
-                <!-- Category -->
-                <p class="category">Electronics</p>
+                <h2 class="price" id="product-price">₹0</h2>
 
-                <!-- Product Name -->
-                <h1>Scientific Calculator</h1>
-
-                <!-- Rating -->
-                <div class="rating">
-                    ★★★★★
-                    <span>4.8 (12 reviews)</span>
-                </div>
-
-
-                <!-- Price -->
-                <h2 class="price">₹1,200</h2>
-
-                <p class="original-price">
-                    Original Price: ₹1,800
-                </p>
-
-
-                <!-- Condition -->
                 <div class="condition">
                     <span>Condition</span>
-                    <strong>Like New</strong>
+                    <strong id="product-condition">Good</strong>
                 </div>
 
-
-                <!-- Location -->
-                <div class="location">
-                    📍 RCPIT Campus
+                <div class="location" id="product-location">
+                    📍 Handover location
                 </div>
 
-
-                <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <a href="https://wa.me/" target="_blank" class="whatsapp-btn">
+                    <a href="#" target="_blank" class="whatsapp-btn" id="whatsapp-btn">
                         Contact Seller on WhatsApp
                     </a>
-                    <button type="button" class="report-btn">
-                        Report Seller
+                    <button type="button" class="fav-btn" id="fav-btn" title="Save to favorites">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span id="fav-btn-label">Save</span>
                     </button>
                 </div>
 
-                <!-- Contact Note -->
                 <p class="contact-note">
-                    Discuss price, availability and handover directly with the seller.
+                    Discuss price, availability, and physical handover directly with the seller in a public campus area.
                 </p>
 
                 <!-- Seller Information -->
@@ -142,197 +133,216 @@
                     <h3>Seller Information</h3>
 
                     <div class="seller">
-                        <div class="seller-avatar">
-                            R
-                        </div>
+                        <div class="seller-avatar" id="seller-avatar">S</div>
                         <div>
-                            <h4>Roshan Patil</h4>
-                            <p class="seller-college">R. C. Patel Institute of Technology, Shirpur</p>
-                            <p class="seller-dept">2nd Year • IT Engineering</p>
+                            <h4 id="seller-name">Student</h4>
+                            <p class="seller-college" id="seller-college">College</p>
+                            <p class="seller-dept" id="seller-dept"></p>
                         </div>
                     </div>
 
                     <div class="seller-meta">
-                        <p><strong>Condition:</strong> Like New</p>
-                        <p><strong>Campus Handover Location:</strong> RCPIT Campus</p>
+                        <p><strong>Campus Handover Location:</strong> <span id="seller-handover">On campus</span></p>
                     </div>
                 </div>
-
             </div>
-
         </div>
 
-
         <!-- ================= DESCRIPTION ================= -->
-
-        <section class="description-section">
-
+        <section class="description-section" id="description-section">
             <h2>Product Description</h2>
-
-            <p>
-                Scientific calculator in very good condition.
-                It is useful for engineering students and can be
-                used for mathematics, physics and other technical subjects.
-            </p>
-
-            <ul>
-                <li>Used for only one semester</li>
-                <li>Works perfectly</li>
-                <li>No major scratches</li>
-                <li>Original calculator cover included</li>
-                <li>Available for campus pickup</li>
-            </ul>
-
+            <p id="product-description">No description provided.</p>
         </section>
-
-
-        <!-- ================= PRODUCT DETAILS ================= -->
-
-        <section class="details-section">
-
-            <h2>Product Details</h2>
-
-            <div class="details-grid">
-
-                <div>
-                    <span>Category</span>
-                    <strong>Electronics</strong>
-                </div>
-
-                <div>
-                    <span>Condition</span>
-                    <strong>Like New</strong>
-                </div>
-
-                <div>
-                    <span>Brand</span>
-                    <strong>Casio</strong>
-                </div>
-
-                <div>
-                    <span>Location</span>
-                    <strong>RCPIT Campus</strong>
-                </div>
-
-                <div>
-                    <span>Posted</span>
-                    <strong>2 days ago</strong>
-                </div>
-
-                <div>
-                    <span>Product ID</span>
-                    <strong>CS10245</strong>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= SIMILAR PRODUCTS ================= -->
-
-        <section class="similar-section">
-
-            <div class="section-heading">
-                <h2>Similar Products</h2>
-
-                <a href="product.html" class="view-all">
-                    View all →
-                </a>
-            </div>
-
-
-            <div class="products">
-
-                <!-- Product 1 -->
-
-                <div class="card">
-
-                    <div class="card-image">
-                        <img src="assets/demo.png" alt="Semester Books">
-                    </div>
-
-                    <a href="product.html">Semester Books</a>
-
-                    <h3>₹500</h3>
-
-                    <span>Good</span>
-
-                </div>
-
-
-                <!-- Product 2 -->
-
-                <div class="card">
-
-                    <div class="card-image">
-                        <img src="assets/demo.png" alt="Project">
-                    </div>
-
-                    <a href="product.html">Engineering Project</a>
-
-                    <h3>₹3,500</h3>
-
-                    <span>Good</span>
-
-                </div>
-
-
-                <!-- Product 3 -->
-
-                <div class="card">
-
-                    <div class="card-image">
-                        <img src="assets/demo.png" alt="Lab Coat">
-                    </div>
-
-                    <a href="product.html">Lab Coat</a>
-
-                    <h3>₹700</h3>
-
-                    <span>Like New</span>
-
-                </div>
-
-            </div>
-
-        </section>
-
     </main>
 
-
     <!-- ================= FOOTER ================= -->
-
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <!-- Main Content -->
             <div class="footer-main">
-                <!-- Brand Info -->
                 <div class="footer-brand">
                     <span class="footer-logo">Campu<span class="highlight-s">s</span>wap</span>
                     <p class="footer-tagline">Made for students, by students.</p>
                 </div>
 
-                <!-- Quick Links -->
                 <div class="footer-nav">
                     <h4 class="footer-heading">Quick Links</h4>
                     <ul class="footer-links">
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="material.html">Material</a></li>
                         <li><a href="sell.html">Sell</a></li>
-                        <li><a href="Auth/user.html#login">Login</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms &amp; Conditions</a></li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Bottom Line -->
             <div class="footer-bottom">
-                <p>&copy; 2026 Campuswap. All rights reserved.</p>
+                <p>&copy; 2026 Campuswap. Campus-Only Student Marketplace.</p>
             </div>
         </div>
     </footer>
 
-</body>
+    <script>
+        (function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const listingId = urlParams.get('id');
+            const mainImg = document.getElementById('main-product-img');
+            const thumbsContainer = document.getElementById('thumbnails-container');
+            const thumb0 = document.getElementById('thumb-0');
+            const thumb1 = document.getElementById('thumb-1');
+            const thumbImg0 = document.getElementById('thumb-img-0');
+            const thumbImg1 = document.getElementById('thumb-img-1');
+            const logoutBtn = document.getElementById('logout-btn');
+            const headerCampusBadge = document.getElementById('header-campus-badge');
+            const campusError = document.getElementById('campus-error');
+            const productContent = document.getElementById('product-content');
+            const descSection = document.getElementById('description-section');
 
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async () => {
+                    try { await fetch('/api/auth/logout', { method: 'POST' }); }
+                    finally { window.location.replace('Auth/user.html#login'); }
+                });
+            }
+
+            function setupHeader(user) {
+                if (headerCampusBadge && user.college) {
+                    headerCampusBadge.textContent = 'Campus: ' + user.college;
+                }
+            }
+
+            if (window.__currentUser) {
+                setupHeader(window.__currentUser);
+            } else {
+                document.addEventListener('campuswap:user-ready', (e) => setupHeader(e.detail));
+            }
+
+            if (!listingId) return;
+
+            fetch('/api/listings/' + listingId)
+                .then(async (res) => {
+                    const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.message || 'Could not load listing');
+                    }
+                    return data;
+                })
+                .then(data => {
+                    const item = data.listing;
+                    if (!item) return;
+
+                    document.title = item.title + ' - Campuswap';
+                    document.getElementById('product-title').textContent = item.title;
+                    document.getElementById('product-category').textContent = item.category.toUpperCase();
+                    document.getElementById('product-price').textContent = '₹' + (item.pricePaise / 100).toLocaleString('en-IN');
+                    document.getElementById('product-condition').textContent = item.condition;
+                    document.getElementById('product-location').textContent = '📍 ' + (item.handoverLocation || item.college);
+                    document.getElementById('product-description').textContent = item.description || 'No description provided.';
+                    document.getElementById('seller-handover').textContent = item.handoverLocation || item.college;
+
+                    if (item.sellerId) {
+                        const seller = item.sellerId;
+                        document.getElementById('seller-name').textContent = seller.name || 'Campus Student';
+                        document.getElementById('seller-college').textContent = item.college;
+                        document.getElementById('seller-avatar').textContent = (seller.name || 'S').charAt(0).toUpperCase();
+                        if (seller.department || seller.year) {
+                            const parts = [];
+                            if (seller.year) parts.push('Year ' + seller.year);
+                            if (seller.department) parts.push(seller.department);
+                            document.getElementById('seller-dept').textContent = parts.join(' • ');
+                        }
+
+                        if (seller.phone) {
+                            const cleanPhone = seller.phone.replace(/[^0-9]/g, '');
+                            const message = encodeURIComponent('Hi ' + seller.name + ', I saw your listing for "' + item.title + '" on CampusSwap and I would like to buy it.');
+                            document.getElementById('whatsapp-btn').href = 'https://wa.me/91' + cleanPhone + '?text=' + message;
+                        }
+                    }
+
+                    // Handle images (Rule: maximum 2 images, show 1 if only 1 exists)
+                    const images = item.images || [];
+                    if (images.length === 1) {
+                        mainImg.src = images[0].url;
+                        thumbsContainer.style.display = 'none';
+                    } else if (images.length === 2) {
+                        mainImg.src = images[0].url;
+                        thumbImg0.src = images[0].url;
+                        thumbImg1.src = images[1].url;
+                        thumbsContainer.style.display = 'flex';
+
+                        thumb0.addEventListener('click', () => {
+                            mainImg.src = images[0].url;
+                            thumb0.classList.add('active');
+                            thumb1.classList.remove('active');
+                        });
+                        thumb1.addEventListener('click', () => {
+                            mainImg.src = images[1].url;
+                            thumb1.classList.add('active');
+                            thumb0.classList.remove('active');
+                        });
+                    }
+
+                    // Setup Favorite Toggle
+                    const favBtn = document.getElementById('fav-btn');
+                    const favLabel = document.getElementById('fav-btn-label');
+                    const favSvg = favBtn ? favBtn.querySelector('svg') : null;
+
+                    function setFavUI(saved) {
+                        if (!favBtn) return;
+                        if (saved) {
+                            favBtn.classList.add('active');
+                            if (favLabel) favLabel.textContent = 'Saved';
+                            if (favSvg) favSvg.setAttribute('fill', '#e11d48');
+                            favBtn.title = 'Remove from saved';
+                        } else {
+                            favBtn.classList.remove('active');
+                            if (favLabel) favLabel.textContent = 'Save';
+                            if (favSvg) favSvg.setAttribute('fill', 'none');
+                            favBtn.title = 'Save to favorites';
+                        }
+                    }
+
+                    // Check initial status
+                    fetch('/api/favorites')
+                        .then(r => r.json())
+                        .then(favData => {
+                            if (favData && favData.success && Array.isArray(favData.favoriteIds)) {
+                                if (favData.favoriteIds.includes(listingId)) {
+                                    setFavUI(true);
+                                }
+                            }
+                        })
+                        .catch(() => {});
+
+                    if (favBtn) {
+                        favBtn.addEventListener('click', async () => {
+                            const currentlySaved = favBtn.classList.contains('active');
+                            // Immediate UI update
+                            setFavUI(!currentlySaved);
+
+                            try {
+                                const res = await fetch('/api/favorites/' + listingId, {
+                                    method: currentlySaved ? 'DELETE' : 'PUT'
+                                });
+                                const data = await res.json();
+                                if (!res.ok || !data.success) {
+                                    // Revert on error
+                                    setFavUI(currentlySaved);
+                                    alert(data.message || 'Could not update saved status');
+                                }
+                            } catch {
+                                // Revert on network failure
+                                setFavUI(currentlySaved);
+                            }
+                        });
+                    }
+                })
+                .catch(err => {
+                    campusError.textContent = err.message;
+                    campusError.style.display = 'block';
+                    productContent.style.display = 'none';
+                    descSection.style.display = 'none';
+                });
+        })();
+    </script>
+</body>
 </html>

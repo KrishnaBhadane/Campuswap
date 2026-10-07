@@ -65,6 +65,38 @@
   border-radius: 10px;
   padding: 7px;
   box-sizing: border-box;
+  position: relative;
+}
+
+.card-fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s ease;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+}
+
+.card-fav-btn:hover {
+  background: #ffffff;
+  color: #e11d48;
+  transform: scale(1.08);
+}
+
+.card-fav-btn.active {
+  color: #e11d48;
+  background: #ffffff;
 }
 
 .card-img {

@@ -255,6 +255,40 @@ main {
     background: #eaaa00;
 }
 
+/* Save / Favorite Button */
+.fav-btn {
+    background: #ffffff;
+    color: #334155;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 13px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.fav-btn:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
+
+.fav-btn.active {
+    background: #fff1f2;
+    border-color: #f43f5e;
+    color: #e11d48;
+}
+
+.fav-btn.active svg {
+    fill: #e11d48;
+    stroke: #e11d48;
+}
+
 /* Secondary Report Seller Button */
 .report-btn {
     background: transparent;

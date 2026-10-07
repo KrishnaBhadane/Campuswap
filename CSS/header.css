@@ -140,3 +140,34 @@ html, body {
     display: inline-flex; /* Show yellow pill Sell button on desktop */
   }
 }
+
+.campus-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f8fafc;
+  color: #1e293b;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #fecaca;
+}

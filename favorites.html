@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Items - Campuswap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/header.css">
+  <link rel="stylesheet" href="CSS/logo_name.css">
+  <link rel="stylesheet" href="CSS/favorites.css">
+  <link rel="stylesheet" href="CSS/footer.css">
+  <style>
+    html.auth-checking body {
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    document.documentElement.classList.add('auth-checking');
+    fetch('/api/auth/me')
+      .then(function(res) {
+        if (!res.ok) throw new Error('Unauthenticated');
+        return res.json();
+      })
+      .then(function(data) {
+        if (data && data.success && data.user) {
+          window.__currentUser = data.user;
+          document.documentElement.classList.remove('auth-checking');
+          document.dispatchEvent(new CustomEvent('campuswap:ready', { detail: data.user }));
+        } else {
+          window.location.replace('Auth/user.html#login?redirect=favorites.html');
+        }
+      })
+      .catch(function() {
+        window.location.replace('Auth/user.html#login?redirect=favorites.html');
+      });
+  </script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="Campuswap Logo" class="logo">
+      <span class="logo-name">Campu<span class="highlight-s">s</span>wap</span>
+    </a>
+
+    <nav class="nav-links">
+      <span class="campus-badge" id="header-campus">Campus</span>
+      <a href="favorites.html" class="nav-item" style="font-weight: 700; color: #0f172a;">Saved</a>
+      <a href="my-listings.html" class="nav-item">My Listings</a>
+      <a href="sell.html" class="nav-item sell-btn">+ Sell</a>
+      <button type="button" class="logout-btn" id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <main class="favorites-container">
+    <div class="page-header">
+      <h1 class="page-title">Saved Items</h1>
+      <p class="page-subtitle" id="campus-subtitle">Items you bookmarked from your campus marketplace</p>
+    </div>
+
+    <!-- Alert Banner -->
+    <div id="fav-alert" style="display:none; padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:16px;" role="alert"></div>
+
+    <div id="favorites-grid" class="favorites-grid">
+      <div class="empty-favorites">
+        <p>Loading your saved items...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <span class="footer-logo">Campu<span class="highlight-s">s</span>wap</span>
+          <p class="footer-tagline">Made for students, by students.</p>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="favorites.html">Saved</a></li>
+            <li><a href="my-listings.html">My Listings</a></li>
+            <li><a href="sell.html">Sell</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Campuswap. Campus-Only Student Marketplace.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const grid = document.getElementById('favorites-grid');
+      const alertBox = document.getElementById('fav-alert');
+
+      function showAlert(msg, isSuccess = true) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = isSuccess ? '#ecfdf5' : '#fee2e2';
+        alertBox.style.color = isSuccess ? '#065f46' : '#991b1b';
+        alertBox.style.border = isSuccess ? '1px solid #a7f3d0' : '1px solid #fecaca';
+        alertBox.textContent = msg;
+        setTimeout(() => { alertBox.style.display = 'none'; }, 2500);
+      }
+
+      function setupHeader(user) {
+        if (user && user.college) {
+          document.getElementById('header-campus').textContent = 'Campus: ' + user.college;
+          document.getElementById('campus-subtitle').textContent = 'Items you saved inside ' + user.college;
+        }
+      }
+
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+          try { await fetch('/api/auth/logout', { method: 'POST' }); }
+          finally { window.location.replace('Auth/user.html#login'); }
+        });
+      }
+
+      if (window.__currentUser) {
+        setupHeader(window.__currentUser);
+        loadFavorites();
+      } else {
+        document.addEventListener('campuswap:ready', (e) => {
+          setupHeader(e.detail);
+          loadFavorites();
+        });
+      }
+
+      async function loadFavorites() {
+        try {
+          const res = await fetch('/api/favorites');
+          const data = await res.json();
+          if (!res.ok || !data.success) throw new Error(data.message || 'Could not load saved items');
+
+          renderFavorites(data.favorites || []);
+        } catch (err) {
+          grid.innerHTML = `<div class="empty-favorites"><p>${err.message}</p></div>`;
+        }
+      }
+
+      function renderFavorites(items) {
+        if (!items || items.length === 0) {
+          grid.innerHTML = `
+            <div class="empty-favorites" style="grid-column: 1 / -1;">
+              <p>You haven't saved any items yet.</p>
+              <a href="index.html" class="sell-btn" style="text-decoration:none; display:inline-block;">Explore Marketplace</a>
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = items.map(fav => {
+          const item = fav.listing;
+          const imgUrl = (item.images && item.images[0]?.url) ? item.images[0].url : 'assets/demo.png';
+          return `
+            <div class="fav-card" id="fav-${item._id}">
+              <div class="fav-img-wrapper">
+                <img src="${imgUrl}" alt="${item.title}" class="fav-img">
+                <span class="fav-status-badge status-${item.status}">${item.status}</span>
+                <button type="button" class="fav-remove-btn" data-id="${item._id}" title="Remove from saved" aria-label="Remove from saved">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                </button>
+              </div>
+              <div class="fav-body">
+                <a href="product.html?id=${item._id}" class="fav-title">${item.title}</a>
+                <p class="fav-price">₹${(item.pricePaise / 100).toLocaleString('en-IN')}</p>
+                <div class="fav-meta">
+                  <span>${item.condition}</span>
+                  <a href="product.html?id=${item._id}" class="btn-view-product">View Details &rarr;</a>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        grid.querySelectorAll('.fav-remove-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const listingId = btn.dataset.id;
+            try {
+              const res = await fetch('/api/favorites/' + listingId, { method: 'DELETE' });
+              const data = await res.json();
+              if (res.ok && data.success) {
+                showAlert('Removed from saved items', true);
+                const card = document.getElementById('fav-' + listingId);
+                if (card) card.remove();
+                if (grid.children.length === 0) {
+                  renderFavorites([]);
+                }
+              } else {
+                showAlert(data.message || 'Could not remove item', false);
+              }
+            } catch {
+              showAlert('Network error', false);
+            }
+          });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

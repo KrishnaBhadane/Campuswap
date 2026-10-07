@@ -123,6 +123,61 @@ body {
   font-size: 13px;
 }
 
+.readonly-input {
+  background-color: #f3f4f6 !important;
+  color: #374151 !important;
+  font-weight: 600;
+  cursor: not-allowed;
+  border-color: #e5e7eb !important;
+}
+
+.field-hint {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.sell-alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  display: none;
+  margin-bottom: 16px;
+}
+.sell-alert.error {
+  display: block;
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+.sell-alert.success {
+  display: block;
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.image-upload-slots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 500px) {
+  .image-upload-slots {
+    grid-template-columns: 1fr;
+  }
+}
+.image-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.image-slot span {
+  font-size: 12px;
+  color: #4b5563;
+  font-weight: 500;
+}
+
 /* Submit Button */
 .btn-post {
   margin-top: 8px;

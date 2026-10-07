@@ -18,6 +18,31 @@
   <link rel="stylesheet" href="CSS/study_material.css">
   <link rel="stylesheet" href="CSS/footer.css">
   <link rel="stylesheet" href="product.css">
+  <style>
+    html.auth-checking body {
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    document.documentElement.classList.add('auth-checking');
+    fetch('/api/auth/me')
+      .then(function(res) {
+        if (!res.ok) throw new Error('Unauthenticated');
+        return res.json();
+      })
+      .then(function(data) {
+        if (data && data.success && data.user) {
+          window.__currentUser = data.user;
+          document.documentElement.classList.remove('auth-checking');
+          document.dispatchEvent(new CustomEvent('campuswap:ready', { detail: data.user }));
+        } else {
+          window.location.replace('Auth/user.html#login');
+        }
+      })
+      .catch(function() {
+        window.location.replace('Auth/user.html#login');
+      });
+  </script>
 </head>
 
 <body>
@@ -37,6 +62,7 @@
 
     <!-- Navigation Links -->
     <nav class="nav-links">
+      <a href="favorites.html" class="nav-item">Saved</a>
       <a href="sell.html" class="nav-item sell-btn">+ Sell</a>
       <a href="Auth/user.html#login" class="nav-item login-btn">Sign in</a>
     </nav>
@@ -275,20 +301,138 @@
           <h4 class="footer-heading">Quick Links</h4>
           <ul class="footer-links">
             <li><a href="#">Home</a></li>
-            <li><a href="#material">Material</a></li>
             <li><a href="sell.html">Sell</a></li>
-            <li><a href="Auth/user.html#login">Login</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
           </ul>
         </div>
       </div>
 
       <!-- Bottom Line -->
       <div class="footer-bottom">
-        <p>&copy; 2026 Campuswap. All rights reserved.</p>
+        <p>&copy; 2026 Campuswap. Campus-Only Student Marketplace.</p>
       </div>
     </div>
   </footer>
 
-</body>
+  <script>
+    (function () {
+      function setupUser(user) {
+        const nav = document.querySelector('.nav-links');
+        if (nav && user) {
+          nav.innerHTML = `
+            <span class="campus-badge" title="Authenticated Campus">Campus: ${user.college}</span>
+            <a href="favorites.html" class="nav-item" style="font-weight:600; color:#334155;">Saved</a>
+            <a href="my-listings.html" class="nav-item" style="font-weight:600; color:#334155;">My Listings</a>
+            <a href="sell.html" class="nav-item sell-btn">+ Sell</a>
+            <button type="button" class="logout-btn" id="logout-btn">Logout</button>
+          `;
+          const logoutBtn = document.getElementById('logout-btn');
+          if (logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+              try {
+                await fetch('/api/auth/logout', { method: 'POST' });
+              } finally {
+                window.location.replace('Auth/user.html#login');
+              }
+            });
+          }
+        }
 
+        const subtitle = document.querySelector('.recent-subtitle');
+        if (subtitle && user.college) {
+          subtitle.textContent = 'Fresh finds inside ' + user.college;
+        }
+
+        Promise.all([
+          fetch('/api/listings').then(r => r.json()).catch(() => ({ listings: [] })),
+          fetch('/api/favorites').then(r => r.json()).catch(() => ({ favoriteIds: [] }))
+        ]).then(([listData, favData]) => {
+          if (listData && listData.success && listData.listings && listData.listings.length > 0) {
+            const savedIds = new Set(favData && favData.favoriteIds ? favData.favoriteIds : []);
+            const track = document.querySelector('.cards-track');
+            if (track) {
+              track.innerHTML = listData.listings.map(item => {
+                const isSaved = savedIds.has(item._id);
+                const imgUrl = (item.images && item.images[0]?.url) ? item.images[0].url : 'assets/demo.png';
+                return `
+                  <div class="product-card">
+                    <button type="button" class="card-fav-btn ${isSaved ? 'active' : ''}" data-id="${item._id}" title="${isSaved ? 'Remove from saved' : 'Save item'}" aria-label="Save item">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="${isSaved ? '#e11d48' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                    </button>
+                    <a href="product.html?id=${item._id}" style="text-decoration:none; color:inherit; display:block;">
+                      <img src="${imgUrl}" alt="${item.title}" class="card-img" style="object-fit:cover;">
+                      <h3 class="product-name">${item.title}</h3>
+                      <p class="product-price">₹${(item.pricePaise / 100).toLocaleString('en-IN')}</p>
+                      <span class="product-condition">${item.condition}</span>
+                    </a>
+                  </div>
+                `;
+              }).join('');
+
+              track.querySelectorAll('.card-fav-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const listingId = btn.dataset.id;
+                  const currentlySaved = btn.classList.contains('active');
+                  const svg = btn.querySelector('svg');
+
+                  // Immediate UI update
+                  if (currentlySaved) {
+                    btn.classList.remove('active');
+                    if (svg) svg.setAttribute('fill', 'none');
+                    btn.title = 'Save item';
+                  } else {
+                    btn.classList.add('active');
+                    if (svg) svg.setAttribute('fill', '#e11d48');
+                    btn.title = 'Remove from saved';
+                  }
+
+                  try {
+                    const res = await fetch('/api/favorites/' + listingId, {
+                      method: currentlySaved ? 'DELETE' : 'PUT'
+                    });
+                    const resData = await res.json();
+                    if (!res.ok || !resData.success) {
+                      // Revert
+                      if (currentlySaved) {
+                        btn.classList.add('active');
+                        if (svg) svg.setAttribute('fill', '#e11d48');
+                        btn.title = 'Remove from saved';
+                      } else {
+                        btn.classList.remove('active');
+                        if (svg) svg.setAttribute('fill', 'none');
+                        btn.title = 'Save item';
+                      }
+                    }
+                  } catch {
+                    // Revert
+                    if (currentlySaved) {
+                      btn.classList.add('active');
+                      if (svg) svg.setAttribute('fill', '#e11d48');
+                      btn.title = 'Remove from saved';
+                    } else {
+                      btn.classList.remove('active');
+                      if (svg) svg.setAttribute('fill', 'none');
+                      btn.title = 'Save item';
+                    }
+                  }
+                });
+              });
+            }
+          }
+        }).catch(() => {});
+      }
+
+      if (window.__currentUser) {
+        setupUser(window.__currentUser);
+      } else {
+        document.addEventListener('campuswap:ready', (e) => setupUser(e.detail));
+      }
+    })();
+  </script>
+</body>
 </html>

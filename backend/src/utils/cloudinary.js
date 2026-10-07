@@ -36,3 +36,27 @@ export async function readPrivateId(publicId) {
   if (!response.ok) throw Object.assign(new Error('College ID could not be retrieved'), { status: 502 });
   return Buffer.from(await response.arrayBuffer());
 }
+
+export async function uploadProductImage(buffer) {
+  const publicId = `campuswap/listings/${randomUUID()}`;
+  try {
+    const result = await new Promise((resolve, reject) => {
+      client().uploader.upload_stream(
+        { public_id: publicId, resource_type: 'image', timeout: 20000 },
+        (error, res) => error ? reject(error) : resolve(res)
+      ).end(buffer);
+    });
+    return { publicId: result.public_id, url: result.secure_url };
+  } catch {
+    throw Object.assign(new Error('Product image upload failed'), { status: 502 });
+  }
+}
+
+export async function deleteProductImage(publicId) {
+  if (!publicId) return;
+  try {
+    await client().uploader.destroy(publicId, { resource_type: 'image', invalidate: true, timeout: 15000 });
+  } catch {
+    // Ignore non-fatal cleanup failure
+  }
+}

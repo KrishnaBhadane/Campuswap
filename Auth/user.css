@@ -32,6 +32,27 @@ body {
   margin-bottom: 15px;
 }
 
+.auth-alert {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 15px;
+  text-align: left;
+  display: none;
+}
+.auth-alert.error {
+  display: block;
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+.auth-alert.success {
+  display: block;
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
 /* Auth Tabs (Login / Register Switcher) */
 .auth-tabs {
   display: flex;

@@ -16,8 +16,14 @@ const listingSchema = new mongoose.Schema({
   handoverLocation: { type: String, required: true, trim: true, maxlength: 200 },
   images: {
     type: [imageSchema],
-    required: true,
-    validate: { validator: images => images.length >= 1 && images.length <= 3, message: 'Provide 1 to 3 images.' }
+    required: function() { return !this.deletedAt; },
+    validate: {
+      validator: function(images) {
+        if (this.deletedAt) return true;
+        return Array.isArray(images) && images.length >= 1 && images.length <= 2;
+      },
+      message: 'Provide 1 or 2 images.'
+    }
   },
   brand: { type: String, trim: true, maxlength: 100 },
   semester: { type: Number, min: 1, max: 12, validate: Number.isInteger },
@@ -27,6 +33,7 @@ const listingSchema = new mongoose.Schema({
   deletedAt: { type: Date, default: null }
 }, { timestamps: true });
 
+listingSchema.index({ college: 1, moderationStatus: 1, deletedAt: 1, status: 1, createdAt: -1 });
 listingSchema.index({ moderationStatus: 1, deletedAt: 1, status: 1, createdAt: -1 });
 listingSchema.index({ sellerId: 1, createdAt: -1 });
 listingSchema.index({ title: 'text', description: 'text' });
