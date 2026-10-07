@@ -19,7 +19,7 @@ body {
 .auth-card {
   background-color: #ffffff;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   padding: 30px;
   border-radius: 10px;
   border: 1px solid #ddd;
@@ -30,6 +30,61 @@ body {
 .logo {
   height: 45px;
   margin-bottom: 15px;
+}
+
+/* Auth Tabs (Login / Register Switcher) */
+.auth-tabs {
+  display: flex;
+  background-color: #f1f5f9;
+  padding: 4px;
+  border-radius: 8px;
+  margin-bottom: 22px;
+  gap: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-tab-btn:hover {
+  color: #1e293b;
+}
+
+.auth-tab-btn.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+/* Auth Sections */
+.auth-section {
+  display: none;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.auth-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h2 {
