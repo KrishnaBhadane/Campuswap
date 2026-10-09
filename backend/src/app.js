@@ -25,7 +25,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "blob:", "https://res.cloudinary.com", "https:"],
-      connectSrc: ["'self'", process.env.FRONTEND_URL || "'self'"],
+      connectSrc: ["'self'", process.env.FRONTEND_URL || "'self'", "https://*.vercel.app"],
       frameAncestors: ["'none'"]
     }
   },
@@ -36,8 +36,11 @@ app.use(helmet({
 app.use((req, res, next) => {
   const origin = req.get('origin');
   const allowed = process.env.FRONTEND_URL;
+  const sameOrigin = `${req.protocol}://${req.get('host')}`;
+  let isVercel = false;
+  try { if (origin) isVercel = /\.vercel\.app$/.test(new URL(origin).hostname); } catch {}
   const isDevLocal = process.env.NODE_ENV !== 'production' && origin && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
-  if (origin && (origin === allowed || isDevLocal)) {
+  if (origin && (origin === allowed || origin === sameOrigin || isVercel || isDevLocal)) {
     res.set('Access-Control-Allow-Origin', origin);
     res.set('Access-Control-Allow-Credentials', 'true');
     res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
@@ -64,8 +67,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/', (req, res) => res.sendFile(path.join(htmlPath, 'index.html')));
+
 // Serve HTML with no-cache so browsers always get fresh documents
 app.use(express.static(htmlPath, {
+  extensions: ['html'],
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.html')) {
       res.set('Cache-Control', 'no-cache');

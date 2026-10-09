@@ -17,8 +17,10 @@ export const maskEmail = email => `${email[0]}***@${email.split('@')[1]}`;
 export function checkOrigin(req, res, next) {
   const origin = req.get('origin');
   const sameOrigin = `${req.protocol}://${req.get('host')}`;
+  let isVercel = false;
+  try { if (origin) isVercel = /\.vercel\.app$/.test(new URL(origin).hostname); } catch {}
   const isDevLocal = process.env.NODE_ENV !== 'production' && origin && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
-  if (req.get('sec-fetch-site') === 'cross-site' || (origin && origin !== process.env.FRONTEND_URL && origin !== sameOrigin && !isDevLocal)) {
+  if (req.get('sec-fetch-site') === 'cross-site' || (origin && origin !== process.env.FRONTEND_URL && origin !== sameOrigin && !isVercel && !isDevLocal)) {
     return res.status(403).json({ success: false, message: 'Origin not allowed' });
   }
   next();
