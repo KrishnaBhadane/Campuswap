@@ -9,9 +9,6 @@
   "functions": {
     "api/index.js": {
       "includeFiles": "frontend/**"
-    },
-    "server.js": {
-      "includeFiles": "frontend/**"
     }
   }
 }
