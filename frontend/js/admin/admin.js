@@ -50,6 +50,12 @@ function studentRows(users, query) {
     const controls = [view];
     if (user.hasCollegeId && user.verificationStatus === 'pending') controls.push(button('Approve', () => review('verified')), button('Reject', () => review('rejected')));
     controls.push(button(user.status === 'blocked' ? 'Unblock' : 'Block', () => change(`/api/admin/users/${user._id}/status${query}`, { status: user.status === 'blocked' ? 'active' : 'blocked' })));
+    controls.push(button('Delete', async () => {
+      if (confirm(`Permanently remove student "${user.name}" (${user.email})?`)) {
+        await api(`/api/admin/users/${user._id}${query}`, { method: 'DELETE' });
+        await load();
+      }
+    }));
     return [user.name, user.email, campusName(user), user.campusCode, user.department, user.year, user.emailVerified ? 'Verified' : 'Pending', user.verificationStatus, user.status, actions(...controls)];
   });
 }

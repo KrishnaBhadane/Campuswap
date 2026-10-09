@@ -49,6 +49,20 @@ export async function setUserStatus(req, res) {
   res.json({ user });
 }
 
+export async function deleteUser(req, res) {
+  if (!mongoose.isObjectIdOrHexString(req.params.id)) return res.status(400).json({ message: 'Invalid student ID' });
+  const user = await User.findOne({ _id: req.params.id, role: 'student', ...req.campusFilter });
+  if (!user) return res.status(404).json({ message: 'Student not found in selected campus' });
+
+  await Promise.all([
+    Listing.deleteMany({ sellerId: user._id }),
+    Report.deleteMany({ $or: [{ reporterId: user._id }, { reportedUserId: user._id }] }),
+    User.deleteOne({ _id: user._id })
+  ]);
+
+  res.json({ success: true, message: 'Student account removed permanently' });
+}
+
 export async function viewVerification(req, res) {
   if (!mongoose.isObjectIdOrHexString(req.params.id)) return res.status(400).json({ success: false, message: 'Invalid user ID' });
   const user = await User.findOne({ _id: req.params.id, role: 'student', ...req.campusFilter }).select('+verificationAssetId');

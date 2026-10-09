@@ -77,6 +77,7 @@ Campuswap/
 │   └── js/                  # ES module frontend scripts and admin controllers
 ├── .gitignore
 ├── package.json
+├── server.js            # Vercel serverless entry point
 └── README.md
 ```
 
