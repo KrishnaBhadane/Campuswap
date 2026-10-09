@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -49,7 +50,11 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 
-const frontendPath = path.resolve(fileURLToPath(import.meta.url), '../../../frontend');
+const frontendCandidates = [
+  path.resolve(process.cwd(), 'frontend'),
+  path.resolve(fileURLToPath(import.meta.url), '../../../frontend')
+];
+const frontendPath = frontendCandidates.find(p => existsSync(p)) || frontendCandidates[0];
 const htmlPath = path.join(frontendPath, 'html');
 app.get('/favicon.ico', (req, res) => res.sendFile(path.join(frontendPath, 'assets/favicon.png')));
 app.get(['/Auth/user.html', '/user.html', '/auth/index.html', '/login'], (req, res) => res.redirect(302, '/auth.html' + (req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '')));

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 export default async function connectDB() {
+  if (mongoose.connection.readyState >= 1) return mongoose.connection;
   if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI is required.');
 
   try {
