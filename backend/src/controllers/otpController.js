@@ -3,7 +3,10 @@ import User from '../../../database/models/User.js';
 import { sendVerificationEmail } from '../utils/mail.js';
 import { setAuthCookie, maskEmail } from '../middleware/auth.js';
 
-const hashCode = (id, code) => createHmac('sha256', process.env.JWT_SECRET).update(`email-otp:${id}:${code}`).digest('hex');
+const hashCode = (id, code) => {
+  if (!process.env.JWT_SECRET) throw new Error('Server configuration error: JWT_SECRET environment variable is missing on Vercel');
+  return createHmac('sha256', process.env.JWT_SECRET).update(`email-otp:${id}:${code}`).digest('hex');
+};
 const otpFields = { emailOtpHash: '', emailOtpExpiresAt: '', emailOtpLastSentAt: '', emailOtpAttempts: '', emailOtpWindowStartedAt: '', emailOtpSendCount: '' };
 
 async function sendOtp(user) {

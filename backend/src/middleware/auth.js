@@ -6,6 +6,7 @@ export function cookieOptions() {
 }
 
 export function setAuthCookie(res, user, pending = false) {
+  if (!process.env.JWT_SECRET) throw new Error('Server configuration error: JWT_SECRET environment variable is missing on Vercel');
   const token = jwt.sign({ authVersion: user.authVersion, purpose: pending ? 'email' : 'session' }, process.env.JWT_SECRET, {
     algorithm: 'HS256', subject: user.id, expiresIn: pending ? '30m' : '1d'
   });

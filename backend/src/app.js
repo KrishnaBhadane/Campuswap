@@ -14,6 +14,7 @@ import healthRoutes from './routes/healthRoutes.js';
 import campusRoutes from './routes/campusRoutes.js';
 import homepageRoutes from './routes/homepageRoutes.js';
 import errorHandler from './middleware/errorHandler.js';
+import connectDB from '../../database/db.js';
 
 const app = express();
 
@@ -88,6 +89,19 @@ app.use(express.static(frontendPath, {
     }
   }
 }));
+
+// Ensure database connection for API requests in serverless environments
+app.use(async (req, res, next) => {
+  if (req.path.startsWith('/api') && req.path !== '/api/health') {
+    try {
+      await connectDB();
+    } catch (error) {
+      console.error('Database connection middleware failed:', error);
+      return res.status(503).json({ success: false, message: 'Database connection failed. Please try again.' });
+    }
+  }
+  next();
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);

@@ -1,4 +1,11 @@
 export default function errorHandler(error, req, res, next) {
+  console.error('API Error:', {
+    message: error.message,
+    name: error.name,
+    code: error.code,
+    stack: error.stack
+  });
+
   if (res.headersSent) return next(error);
 
   if (error.name === 'MulterError') {
@@ -12,6 +19,10 @@ export default function errorHandler(error, req, res, next) {
   if (error.code === 11000) return res.status(409).json({ success: false, message: 'Email already registered' });
   if (error.name === 'ValidationError' || error.name === 'CastError') {
     return res.status(400).json({ success: false, message: 'Invalid profile fields' });
+  }
+
+  if (error.message?.startsWith('Server configuration error:')) {
+    return res.status(500).json({ success: false, message: error.message });
   }
 
   const status = error.status >= 400 && error.status <= 599 ? error.status : 500;
