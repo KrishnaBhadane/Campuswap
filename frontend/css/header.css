@@ -1,0 +1,72 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+.header { background:#fff; border-bottom:1px solid #e7e9ed; padding:16px 3%; }
+.market-header { display:flex; align-items:center; gap:24px; width:100%; font:14px/1.5 Arial,sans-serif; }
+.market-header .brand { flex-shrink:0; }
+.market-header .logo { height:34px; }
+.market-header .logo-name { font-size:25px; white-space:nowrap; }
+.market-header .header-search { display:flex; flex:1; align-items:center; gap:8px; min-width:190px; max-width:520px; padding:5px 6px 5px 18px; border:1px solid transparent; border-radius:6px; background:#f3f3f5; }
+.header-search:focus-within { border-color:#ac8520; }
+.market-header .search-input { flex:1; width:100%; min-width:0; min-height:38px; padding:0; border:0; background:transparent; color:#17202c; font:inherit; font-size:14px; outline-offset:2px; }
+.market-header .search-submit { display:grid; place-items:center; flex-shrink:0; width:38px; height:38px; min-height:38px; padding:0; border:0; border-radius:50%; color:#17202c; background:#f9be06; }
+.market-header .search-submit:hover { background:#eab400; }
+.market-header .nav-links { display:flex; align-items:center; gap:24px; margin-left:auto; }
+.market-header .nav-item { display:inline-flex; align-items:center; min-height:42px; color:#17202c; text-decoration:none; font-size:14px; font-weight:600; white-space:nowrap; }
+.market-header .nav-item[aria-current=page] { text-decoration:underline; text-underline-offset:7px; text-decoration-color:#bc9000; text-decoration-thickness:2px; }
+.market-header .sell-btn, .market-header .mobile-sell-btn { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:0 18px; border-radius:6px; background:#f9be06; border:1px solid #dfac0a; color:#17202c; text-decoration:none; font-size:14px; font-weight:600; }
+.market-header .header-account { position:relative; flex-shrink:0; }
+.market-header .account-toggle { display:grid; place-items:center; width:42px; height:42px; padding:0; border-radius:50%; background:#edf0f2; border:1px solid #dbe0e4; color:#344454; font-size:17px; }
+.market-header .account-toggle[aria-expanded=true] { border-color:#ad8613; background:#fff8dc; }
+.market-header .account-panel { display:none; position:absolute; right:0; top:calc(100% + 12px); z-index:30; width:264px; padding:18px; background:#fff; border:1px solid #e1e5e9; border-radius:8px; box-shadow:0 6px 20px rgb(20 30 40 / .08); }
+.market-header .header-account.is-open .account-panel { display:grid; gap:4px; }
+.account-panel strong { font-size:14px; overflow-wrap:anywhere; }
+.market-header .campus-badge { display:block; margin:0 0 12px; color:#586474; font-size:12px; line-height:1.5; overflow-wrap:anywhere; }
+.market-header .account-panel a, .market-header .account-panel button { display:flex; align-items:center; width:100%; min-height:42px; padding:8px 12px; background:transparent; border:0; color:#273444; text-align:left; text-decoration:none; font-size:14px; font-weight:600; }
+.market-header .account-panel .logout-btn { color:#647181; border-top:1px solid #e7e9ed; margin-top:4px; }
+.market-header .menu-toggle, .market-header .mobile-sell-btn { display:none; }
+.roll-text { display:inline-block; position:relative; overflow:hidden; line-height:1.4; white-space:nowrap; vertical-align:middle; }
+.roll-original, .roll-copy { display:block; }
+.roll-copy { position:absolute; inset:0; }
+.roll-text span > span { display:inline-block; transition:transform 250ms ease-in-out; transition-delay:var(--delay); }
+.roll-copy > span { transform:translateY(100%); }
+@media(hover:hover) and (prefers-reduced-motion:no-preference) {
+ .roll-link:not(:disabled):hover .roll-original > span { transform:translateY(-100%); }
+ .roll-link:not(:disabled):hover .roll-copy > span { transform:translateY(0); }
+}
+@media(prefers-reduced-motion:no-preference) {
+ .roll-link:focus-visible .roll-original > span { transform:translateY(-100%); }
+ .roll-link:focus-visible .roll-copy > span { transform:translateY(0); }
+}
+@media(prefers-reduced-motion:reduce) { .roll-copy { display:none; } .roll-text span > span { transition:none; transform:none; } }
+@media(min-width:1100px) and (max-width:1279px) { .market-header { gap:18px; } .market-header .nav-links { gap:16px; } .market-header .logo-name { font-size:23px; } }
+@media(max-width:1099px) {
+ .market-header { flex-wrap:wrap; gap:12px 20px; }
+ .market-header .header-search { max-width:none; }
+ .market-header .nav-links { flex-basis:100%; margin:0; gap:24px; }
+ .market-header .header-account { margin-left:auto; }
+ .market-header .nav-links .sell-btn { margin-left:auto; }
+}
+@media(max-width:767px) {
+ .header { padding:16px 4%; }
+ .market-header { gap:12px; }
+ .market-header .brand { margin-right:auto; }
+ .market-header .logo { height:28px; }
+ .market-header .logo-name { font-size:23px; }
+ .market-header .menu-toggle { display:block; min-height:40px; padding:8px 10px; font-size:13px; }
+ .market-header .mobile-sell-btn { display:inline-flex; min-height:40px; padding:0 12px; }
+ .market-header .header-search { order:3; flex-basis:100%; min-width:0; }
+ .market-header .nav-links { display:none; order:4; flex-basis:100%; padding-top:12px; border-top:1px solid #e7e9ed; }
+ .market-header .nav-links.is-open { display:grid; grid-template-columns:1fr 1fr; gap:4px 16px; }
+ .market-header .account-toggle { display:none; }
+ .market-header .nav-links .sell-btn { margin-left:0; }
+ .market-header .header-account { grid-column:1/-1; width:100%; margin:8px 0 0; }
+ .market-header .account-panel, .market-header .header-account.is-open .account-panel { display:grid; position:static; width:100%; padding:12px 0 0; border:0; border-top:1px solid #e7e9ed; border-radius:0; box-shadow:none; gap:4px; }
+}
+
+.market-header .nav-item:hover, .market-header .account-panel a:hover { color:#725700; }
+.market-header .sell-btn:hover, .market-header .mobile-sell-btn:hover { background:#eab400; color:#17202c; }
+.market-header .account-panel .contact-support-link { background:var(--primary); border:1px solid #d6a400; border-radius:6px; color:var(--text); font-weight:600; }
+.market-header .account-panel .contact-support-link:hover { background:#eab400; }
+.market-header .account-panel .logout-btn:hover, .market-header .account-panel .logout-btn:focus-visible { background:#fee2e2; color:#991b1b; }
+.market-header .header-search { margin:0; }
+
+.market-header [aria-current=page] .roll-text { border-bottom:2px solid #bc9000; }

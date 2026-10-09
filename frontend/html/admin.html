@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>Admin - CampusSwap</title>
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/logo_name.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script type="module" src="/js/admin/admin.js"></script>
+  <link rel="stylesheet" href="/css/global.css">
+</head>
+<body>
+  <header class="header"><a class="brand" href="/admin.html"><img class="logo" src="/assets/logo.png" alt=""><span class="logo-name">Campuswap</span></a><span>Admin Panel</span></header>
+  <p id="message" role="status" aria-live="polite">Checking admin access…</p>
+  <main id="dashboard" hidden>
+    <div class="section-heading"><h1>Admin Panel</h1><label>Campus <select id="campus"><option value="">All Campuses</option></select></label></div>
+    <nav id="admin-nav" aria-label="Admin sections">
+      <button data-section="dashboard" aria-current="page">Dashboard</button><button data-section="students">Students</button>
+      <button data-section="listings">Listings</button><button data-section="reports">Reports</button>
+      <button data-section="homepage">Homepage</button><button data-section="campuses">Campuses</button><button id="logout">Logout</button>
+    </nav>
+    <section id="content" aria-live="polite"></section>
+    <nav id="pagination" class="pagination" aria-label="Pages" hidden><button id="previous">Previous</button><span id="page-label"></span><button id="next">Next</button></nav>
+  </main>
+  <dialog id="detail"><div class="section-heading"><h2 id="detail-title"></h2><button id="close-detail">Close</button></div><div id="detail-body"></div></dialog>
+</body>
+</html>

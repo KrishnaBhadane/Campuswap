@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="auth-checking">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campuswap</title>
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <!-- Google Font: Lobster Two -->
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/logo_name.css">
+  <link rel="stylesheet" href="/css/hero.css">
+  <link rel="stylesheet" href="/css/recently_added.css">
+  <link rel="stylesheet" href="/css/campus_essentials.css">
+  <link rel="stylesheet" href="/css/highlighted_content.css">
+  <link rel="stylesheet" href="/css/study_material.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  
+  <link rel="stylesheet" href="/css/home.css">
+  
+  <link rel="stylesheet" href="/css/global.css">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header"></header>
+
+  <section class="hero" id="homepage-hero" hidden aria-label="Campus announcements">
+    <div class="hero-slider"><div class="slider-track" id="homepage-banners"></div></div>
+    <div class="slider-dots" id="homepage-controls"></div>
+  </section>
+
+  <!-- Recently Added Section -->
+  <section class="recent-section">
+    <div class="recent-header">
+      <div>
+        <h2 class="recent-title">Recently Added</h2>
+        <p class="recent-subtitle">Fresh finds from your campus</p>
+      </div>
+      <label>Category <select id="category-filter"><option value="">All categories</option><option value="books">Books</option><option value="electronics">Electronics</option><option value="stationery">Stationery</option><option value="hostel">Hostel</option><option value="chairs and tables">Chairs &amp; Tables</option><option value="other">Other</option></select></label>
+    </div>
+
+    <div class="cards-track" aria-live="polite"></div>
+    <nav class="listing-pagination" aria-label="Listings pagination">
+      <button id="previous-listings" type="button" aria-label="Previous page">&#8249;</button>
+      <span id="listing-page">Page 1</span>
+      <button id="next-listings" type="button" aria-label="Next page">&#8250;</button>
+    </nav>
+  </section>
+
+  <!-- Campus Essentials Section -->
+  <section class="essentials-section">
+    <h2 class="essentials-title">Campus Essentials</h2>
+
+    <div class="essentials-grid">
+      <!-- Item 1 -->
+      <a href="/index.html?category=hostel" class="essential-card">
+        
+        <div class="essential-info">
+          <h3>Hostel Essentials</h3>
+          <p>Bedsheets, Bottles, Organizers &amp; more</p>
+        </div>
+        <span class="essential-arrow">&rsaquo;</span>
+      </a>
+
+      <!-- Item 2 -->
+      <a href="/index.html?category=electronics" class="essential-card">
+        
+        <div class="essential-info">
+          <h3>Electronics</h3>
+          <p>Laptops, Headphones, Chargers &amp; more</p>
+        </div>
+        <span class="essential-arrow">&rsaquo;</span>
+      </a>
+
+      <!-- Item 3 -->
+      <a href="/index.html?category=stationery" class="essential-card">
+        
+        <div class="essential-info">
+          <h3>Stationery</h3>
+          <p>Pens, Notebooks, Files &amp; more</p>
+        </div>
+        <span class="essential-arrow">&rsaquo;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Highlighted Content Section -->
+  <section class="highlight-section" id="homepage-highlight" hidden>
+    <h2 class="section-title">Highlighted Content</h2>
+    <div class="highlight-card" id="homepage-highlight-card"></div>
+
+  </section>
+
+  <!-- Study Material Section -->
+  <section class="material-section">
+    <div class="material-header">
+      <h2 class="material-title">Study Material</h2>
+      <p class="material-subtext">Notes, books and semester resources</p>
+    </div>
+
+    <div class="material-track" aria-live="polite"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer"><div class="footer-container"><div class="footer-main"><div class="footer-brand"><span class="footer-logo">CampusSwap</span><p class="footer-tagline">Buy and sell within your campus.</p></div><nav aria-label="Footer"><ul class="footer-links"><li><a href="/index.html">Home</a></li><li><a href="/sell.html">Sell</a></li><li><a href="/favorites.html">Favorites</a></li><li><a href="/privacy.html">Privacy Policy</a></li><li><a href="/terms.html">Terms &amp; Conditions</a></li><li><a href="/profile.html?contact=admin" class="contact-support-link">Contact Admin</a></li></ul></nav></div><p class="footer-bottom">&copy; 2026 CampusSwap</p></div></footer>
+
+  <script type="module" src="/js/home.js"></script>
+  <script type="module" src="/js/homepage.js"></script>
+</body>
+</html>

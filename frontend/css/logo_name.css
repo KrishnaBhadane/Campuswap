@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap");
+/* Logo & Brand Name Styling */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logo {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.logo-name {
+  font-family: 'Lobster Two', cursive;
+  font-size: 26px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.highlight-s {
+  color: #f9be06;
+}

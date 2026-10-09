@@ -1,0 +1,8 @@
+#report-actions { margin-top:var(--space-4); }
+#report-dialog { margin:auto; padding:var(--space-6); width:min(480px,92vw); max-height:90vh; overflow:auto; border:1px solid var(--border); border-radius:6px; }
+#report-form { display:grid; gap:var(--space-4); }
+#report-form textarea, #report-form select { width:100%; padding:var(--space-2) var(--space-3); border:1px solid var(--border); }
+#report-dialog #report-submit { background:var(--primary); border-color:#d6a400; color:var(--text); }
+#report-dialog #report-submit:hover { background:#eab400; }
+#report-error { color:var(--danger); }
+#report-message { margin-top:var(--space-3); }

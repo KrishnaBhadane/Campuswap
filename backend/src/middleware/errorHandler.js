@@ -6,6 +6,9 @@ export default function errorHandler(error, req, res, next) {
     return res.status(oversized ? 413 : 400).json({ success: false, message: oversized ? 'College ID must be 5 MB or smaller' : 'Upload exactly one collegeId image' });
   }
 
+  if (error.name === 'VersionError') return res.status(409).json({ success: false, message: 'Listing changed. Reload before editing again.' });
+  if (error.expose === true && error.status >= 400 && error.status < 500) return res.status(error.status).json({ success: false, message: error.message });
+
   if (error.code === 11000) return res.status(409).json({ success: false, message: 'Email already registered' });
   if (error.name === 'ValidationError' || error.name === 'CastError') {
     return res.status(400).json({ success: false, message: 'Invalid profile fields' });

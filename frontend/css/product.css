@@ -1,0 +1,544 @@
+/* ================= BASIC SETTINGS ================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: inherit;
+    background: #ffffff;
+    color: #17202c;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    font: inherit;
+}
+
+/* ================= MAIN ================= */
+main {
+    width: 92%;
+    max-width: var(--content-width);
+    margin: auto;
+    padding: 24px 0 60px;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.back:hover {
+    color: #725700;
+}
+
+.campus-notice {
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin: 20px 0;
+    display: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ================= PRODUCT CONTAINER ================= */
+.product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 40px;
+}
+
+/* ================= PRODUCT GALLERY ================= */
+.product-image-section {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    min-width: 0;
+}
+
+.product-image-section > img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1/1;
+    max-height: 420px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.thumbnail {
+    width: 72px;
+    height: 64px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 3px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.thumbnail.active {
+    border-color: #eab400;
+    outline: 2px solid #eab400;
+}
+
+.thumbnail img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* ================= PRODUCT INFORMATION ================= */
+.product-info {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.category {
+    color: #725700;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.product-info h1 {
+    font-size: clamp(22px, 2.5vw, 28px);
+    font-weight: 700;
+    line-height: 1.25;
+    color: #0f172a;
+    margin-bottom: 12px;
+}
+
+.price-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.price {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.sold-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.condition {
+    display: flex;
+    justify-content: space-between;
+    width: min(280px, 100%);
+    background: #fff8df;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+
+.condition span {
+    color: #555;
+}
+
+.condition strong {
+    color: #725700;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.location {
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: 20px;
+}
+
+.location strong {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* Description */
+.description-section {
+    padding: 16px 0;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 20px;
+}
+
+.description-section h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.description-section p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #475569;
+}
+
+/* ================= ACTION BUTTONS ================= */
+.save-action-wrap {
+    margin-bottom: 18px;
+}
+
+.fav-btn {
+    min-height: 40px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #334155;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.fav-btn:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
+
+.fav-btn.active {
+    background: #fff8df;
+    border-color: #cfb356;
+    color: #725700;
+}
+
+.fav-btn.active svg {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+/* ================= SELLER BOX ================= */
+.seller-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px;
+    background: #fafbfc;
+    margin-bottom: 14px;
+}
+
+.seller-box h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 12px;
+}
+
+.seller {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.seller-avatar {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #ffbf00;
+    color: #111827;
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.seller h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 2px;
+}
+
+.seller-college {
+    font-size: 13px;
+    color: #334155;
+    font-weight: 600;
+}
+
+.seller-dept {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.seller-meta {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 13px;
+    color: #475569;
+}
+
+.seller-meta strong {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.seller-meta span {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.seller-whatsapp-wrap {
+    margin-top: 14px;
+}
+
+.whatsapp-btn {
+    width: 100%;
+    min-height: 42px;
+    background: #ffbf00;
+    color: #111827;
+    border: 1px solid #d6a400;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+
+.whatsapp-btn:hover {
+    background: #eab400;
+}
+
+.seller-report-wrap {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* Secondary / Danger Report Buttons */
+.report-btn.danger {
+    background: #fff5f5;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.report-btn.danger:hover {
+    background: #fee2e2;
+    border-color: #f87171;
+    color: #991b1b;
+}
+
+.listing-report-wrap {
+    margin-bottom: 16px;
+}
+
+.contact-note {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+.report-status-msg {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #0f172a;
+}
+
+.report-status-msg.success {
+    color: #166534;
+}
+
+/* ================= REPORT DIALOG ================= */
+#report-dialog {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 24px;
+    max-width: 440px;
+    width: 90%;
+    margin: auto;
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+#report-form h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 16px;
+}
+
+#report-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+#report-form select,
+#report-form textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+#report-form textarea {
+    resize: vertical;
+}
+
+#report-error {
+    color: #b91c1c;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.dialog-actions button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#report-close {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+}
+
+#report-close:hover {
+    background: #e2e8f0;
+}
+
+.submit-danger {
+    background: #dc2626;
+    border: 1px solid #b91c1c;
+    color: #ffffff;
+}
+
+.submit-danger:hover {
+    background: #b91c1c;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    main {
+        padding: 16px 0 40px;
+    }
+
+    .product-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        border-bottom: none;
+    }
+
+    .product-image-section {
+        padding: 12px;
+    }
+
+    .product-image-section > img {
+        max-height: 320px;
+    }
+
+    .save-action-wrap .fav-btn {
+        width: 100%;
+    }
+
+    /* Mobile order inside seller-box: Contact Seller -> Seller Info -> Report Seller */
+    .seller-box {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .seller-box .seller-whatsapp-wrap {
+        order: 1;
+        margin-top: 0;
+        margin-bottom: 14px;
+    }
+
+    .seller-box h3 {
+        order: 2;
+        margin-bottom: 10px;
+    }
+
+    .seller-box .seller {
+        order: 3;
+    }
+
+    .seller-box .seller-meta {
+        order: 4;
+    }
+
+    .seller-box .seller-report-wrap {
+        order: 5;
+    }
+
+    .report-btn.danger {
+        width: 100%;
+        padding: 8px 12px;
+    }
+
+    .listing-report-wrap .report-btn.danger {
+        width: 100%;
+    }
+}

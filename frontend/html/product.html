@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="auth-checking">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusSwap - Product Details</title>
+    <link rel="icon" href="/assets/favicon.png" type="image/png">
+
+    <!-- Connect CSS -->
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/reports.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/logo_name.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/global.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header"></header>
+
+    <!-- ================= MAIN PRODUCT SECTION ================= -->
+    <main>
+        <a href="/index.html" class="back">&larr; Back to marketplace</a>
+
+        <div id="campus-error" class="campus-notice" style="display:block" role="status">Loading listing…</div>
+
+        <div class="product-container" id="product-content" hidden>
+            <!-- ================= LEFT: PRODUCT GALLERY ================= -->
+            <div class="product-image-section">
+                <img id="main-product-img" hidden alt="Product image">
+
+                <!-- Thumbnails: only shown if exactly 2 images exist -->
+                <div class="thumbnails" id="thumbnails-container" style="display: none;">
+                    <button type="button" aria-label="Show photo 1" aria-pressed="true" class="thumbnail active" id="thumb-0">
+                        <img id="thumb-img-0" src="" alt="Photo 1">
+                    </button>
+                    <button type="button" aria-label="Show photo 2" aria-pressed="false" class="thumbnail" id="thumb-1">
+                        <img id="thumb-img-1" src="" alt="Photo 2">
+                    </button>
+                </div>
+            </div>
+
+            <!-- ================= RIGHT: PRODUCT INFORMATION ================= -->
+            <div class="product-info">
+                <p class="category" id="product-category"></p>
+                <h1 id="product-title"></h1>
+
+                <div class="price-row">
+                    <h2 class="price" id="product-price"></h2>
+                    <span id="sold-notice" class="sold-badge" style="display:none;">SOLD</span>
+                </div>
+
+                <div class="condition">
+                    <span>Condition</span>
+                    <strong id="product-condition"></strong>
+                </div>
+
+                <div class="location">
+                    <span>Handover location:</span> <strong id="product-location"></strong>
+                </div>
+
+                <section class="description-section" id="description-section">
+                    <h2>Product Description</h2>
+                    <p id="product-description">No description provided.</p>
+                </section>
+
+                <!-- Save to favorites action -->
+                <div class="save-action-wrap">
+                    <button type="button" class="fav-btn" id="fav-btn" title="Save to favorites">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span id="fav-btn-label">Save</span>
+                    </button>
+                </div>
+
+                <!-- Seller Information -->
+                <div class="seller-box">
+                    <h3>Seller Information</h3>
+
+                    <div class="seller">
+                        <div class="seller-avatar" id="seller-avatar">S</div>
+                        <div>
+                            <h4 id="seller-name"></h4>
+                            <p class="seller-college" id="seller-college"></p>
+                            <p class="seller-dept" id="seller-dept"></p>
+                        </div>
+                    </div>
+
+                    <div class="seller-meta">
+                        <p><strong>Campus Handover Location:</strong> <span id="seller-handover"></span></p>
+                    </div>
+
+                    <!-- Contact Seller CTA -->
+                    <div class="seller-whatsapp-wrap">
+                        <a href="#" target="_blank" class="whatsapp-btn" id="whatsapp-btn" rel="noopener noreferrer">
+                            Contact Seller on WhatsApp
+                        </a>
+                    </div>
+
+                    <!-- Report Seller Action (inside seller information) -->
+                    <div class="seller-report-wrap" id="seller-report-actions">
+                        <button id="report-user" type="button" class="report-btn danger">Report Seller</button>
+                    </div>
+                </div>
+
+                <!-- Report Listing Action (subtle red secondary action below seller information) -->
+                <div class="listing-report-wrap" id="listing-report-actions">
+                    <button id="report-listing" type="button" class="report-btn danger">Report Listing</button>
+                </div>
+
+                <p class="contact-note">
+                    Discuss price, availability, and physical handover directly with the seller in a public campus area.
+                </p>
+
+                <p id="report-message" class="report-status-msg" role="status" aria-live="polite"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <span class="footer-logo">CampusSwap</span>
+                    <p class="footer-tagline">Buy and sell within your campus.</p>
+                </div>
+                <nav aria-label="Footer">
+                    <ul class="footer-links">
+                        <li><a href="/index.html">Home</a></li>
+                        <li><a href="/sell.html">Sell</a></li>
+                        <li><a href="/favorites.html">Favorites</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms &amp; Conditions</a></li>
+                        <li><a href="/profile.html?contact=admin" class="contact-support-link">Contact Admin</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <p class="footer-bottom">&copy; 2026 CampusSwap</p>
+        </div>
+    </footer>
+
+    <!-- Shared Report Dialog -->
+    <dialog id="report-dialog" aria-labelledby="report-title">
+        <form id="report-form">
+            <h2 id="report-title">Report listing</h2>
+            <label for="report-category">Reason</label>
+            <select id="report-category" required>
+                <option value="" disabled selected>Select a reason</option>
+            </select>
+            <label for="report-reason">Details (optional)</label>
+            <textarea id="report-reason" rows="3" maxlength="1000" placeholder="Provide additional details for the admin..."></textarea>
+            <p id="report-error" role="alert"></p>
+            <div class="dialog-actions">
+                <button id="report-close" type="button">Cancel</button>
+                <button id="report-submit" type="submit" class="submit-danger">Submit report</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script type="module" src="/js/product.js"></script>
+    <script type="module" src="/js/productReport.js"></script>
+</body>
+</html>

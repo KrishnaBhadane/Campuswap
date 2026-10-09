@@ -1,0 +1,160 @@
+/* Marketplace Cards Grid: Desktop = 5 cards per row */
+.cards-track,
+.material-track,
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid #dce1e6;
+  border-radius: 6px;
+  padding: 12px;
+  background: #ffffff;
+  position: relative;
+  transition: border-color 0.15s;
+}
+
+.product-card:hover {
+  border-color: #b5bec8;
+}
+
+.card-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/3;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #f8fafb;
+}
+
+.product-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 10px 0 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #17202c;
+}
+
+.product-price {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 2px 0 6px;
+  color: #17202c;
+}
+
+.product-condition {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #475569;
+  text-transform: capitalize;
+}
+
+.product-card > a {
+  flex: 1;
+}
+
+.card-fav-btn {
+  display: block;
+  margin-top: 10px;
+  width: 100%;
+  background: #ffffff;
+}
+
+.card-fav-btn.active {
+  background: #fff7d6;
+  border-color: #cfb356;
+  color: #594400;
+}
+
+.card-placeholder {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Tablet (1099px and below): 4 cards */
+@media (max-width: 1099px) {
+  .cards-track,
+  .material-track,
+  .favorites-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+/* Small Tablet (767px and below): 3 cards */
+@media (max-width: 767px) {
+  .cards-track,
+  .material-track,
+  .favorites-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+}
+
+/* Mobile (640px and below, including 375px): 3 cards per row, compact */
+@media (max-width: 640px) {
+  .cards-track,
+  .material-track,
+  .favorites-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .product-card {
+    padding: 6px;
+    border-radius: 4px;
+  }
+
+  .card-img {
+    aspect-ratio: 1/1;
+    border-radius: 3px;
+  }
+
+  .product-name {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 6px 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .product-price {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 2px 0 4px;
+    line-height: 1.2;
+  }
+
+  .product-condition {
+    padding: 1px 4px;
+    font-size: 9px;
+    font-weight: 600;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .card-fav-btn {
+    margin-top: 6px;
+    padding: 4px 6px;
+    font-size: 11px;
+    font-weight: 600;
+    min-height: 26px;
+    border-radius: 4px;
+  }
+}

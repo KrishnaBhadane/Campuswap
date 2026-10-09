@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Listing from '../../../database/models/Listing.js';
+import User from '../../../database/models/User.js';
 import { uploadProductImage, deleteProductImage } from '../utils/cloudinary.js';
 
 export async function getListings(req, res) {
@@ -7,6 +8,7 @@ export async function getListings(req, res) {
   if (req.query.mine === 'true') {
     const myListings = await Listing.find({
       sellerId: req.user._id,
+      campusCode: req.user.campusCode,
       deletedAt: null
     })
       .sort({ createdAt: -1 })
@@ -15,28 +17,34 @@ export async function getListings(req, res) {
     return res.json({ success: true, listings: myListings });
   }
 
-  // Enforce campus isolation: college is derived strictly from the authenticated user
+  const blockedSellerIds = await User.find({ status: 'blocked', campusCode: req.user.campusCode }).distinct('_id');
+
   const filter = {
-    college: req.user.college,
+    campusCode: req.user.campusCode,
     moderationStatus: 'visible',
     deletedAt: null,
     status: 'available'
   };
 
-  const allowedCategories = ['books', 'electronics', 'stationery', 'hostel', 'cycles', 'other'];
+  if (blockedSellerIds.length > 0) {
+    filter.sellerId = { $nin: blockedSellerIds };
+  }
+
+  const allowedCategories = ['books', 'electronics', 'stationery', 'hostel', 'chairs and tables', 'chairs_and_tables', 'cycles', 'other'];
   if (req.query.category && allowedCategories.includes(req.query.category)) {
     filter.category = req.query.category;
   }
 
   if (typeof req.query.q === 'string' && req.query.q.trim()) {
-    filter.title = { $regex: req.query.q.trim(), $options: 'i' };
+    if (req.query.q.length > 100) return res.status(400).json({ message: 'Search must be at most 100 characters' });
+    filter.title = { $regex: req.query.q.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' };
   }
 
   const page = Math.max(1, Number(req.query.page) || 1);
   const limit = Math.min(50, Math.max(1, Number(req.query.limit) || 12));
 
   const listings = await Listing.find(filter)
-    .populate('sellerId', 'name email phone college department year')
+    .populate('sellerId', 'name college department year')
     .sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit)
@@ -47,6 +55,7 @@ export async function getListings(req, res) {
   res.json({
     success: true,
     college: req.user.college,
+    campusCode: req.user.campusCode,
     listings,
     pagination: { page, limit, total, pages: Math.ceil(total / limit) }
   });
@@ -59,20 +68,14 @@ export async function getListingById(req, res) {
 
   const listing = await Listing.findOne({
     _id: req.params.id,
+    campusCode: req.user.campusCode,
     moderationStatus: 'visible',
     deletedAt: null
-  }).populate('sellerId', 'name email phone college department year').lean();
+  }).populate('sellerId', 'name email phone college department year status').lean();
 
-  if (!listing) {
-    return res.status(404).json({ success: false, message: 'Listing not found' });
-  }
-
-  // Enforce campus isolation: students from other colleges cannot view this listing
-  if (listing.college !== req.user.college && req.user.role !== 'admin') {
-    return res.status(403).json({
-      success: false,
-      message: 'This listing is only available to students of ' + listing.college
-    });
+  if (!listing || listing.sellerId?.status === 'blocked') {
+    const exists = await Listing.exists({ _id: req.params.id, moderationStatus: 'visible', deletedAt: null });
+    return res.status(exists ? 403 : 404).json({ success: false, message: exists ? 'Listing is unavailable' : 'Listing not found' });
   }
 
   res.json({ success: true, listing });
@@ -90,7 +93,7 @@ export async function createListing(req, res) {
     return res.status(400).json({ success: false, message: 'Title is required (max 150 characters)' });
   }
 
-  const allowedCategories = ['books', 'electronics', 'stationery', 'hostel', 'cycles', 'other'];
+  const allowedCategories = ['books', 'electronics', 'stationery', 'hostel', 'chairs and tables', 'chairs_and_tables', 'cycles', 'other'];
   if (!category || !allowedCategories.includes(category)) {
     return res.status(400).json({ success: false, message: 'Valid category is required' });
   }
@@ -124,7 +127,6 @@ export async function createListing(req, res) {
   }
 
   try {
-    // SECURITY: college is ALWAYS taken from req.user.college, never trusted from req.body
     const listing = new Listing({
       sellerId: req.user._id,
       title: title.trim(),
@@ -133,6 +135,7 @@ export async function createListing(req, res) {
       condition: normCondition,
       pricePaise: Math.round(numPrice * 100),
       college: req.user.college,
+      campusCode: req.user.campusCode,
       handoverLocation: finalLocation,
       images: uploadedImages,
       brand: brand ? String(brand).trim() : undefined,
@@ -152,7 +155,7 @@ export async function updateListing(req, res) {
     return res.status(400).json({ success: false, message: 'Invalid listing ID' });
   }
 
-  const listing = await Listing.findOne({ _id: req.params.id, deletedAt: null });
+  const listing = await Listing.findOne({ _id: req.params.id, campusCode: req.user.campusCode, deletedAt: null });
   if (!listing) {
     return res.status(404).json({ success: false, message: 'Listing not found' });
   }
@@ -162,7 +165,25 @@ export async function updateListing(req, res) {
     return res.status(403).json({ success: false, message: 'Only the listing owner can edit this item' });
   }
 
-  const { title, description, category, condition, price, handoverLocation, location, status } = req.body || {};
+  // Manual mark as sold by seller
+  if (req.body && req.body.status !== undefined) {
+    if (req.body.status !== 'sold') {
+      return res.status(400).json({ success: false, message: 'Listing status can only be manually marked as sold' });
+    }
+    const updated = await Listing.findOneAndUpdate(
+      { _id: listing._id, sellerId: req.user._id, campusCode: req.user.campusCode, deletedAt: null, status: 'available' },
+      { $set: { status: 'sold' }, $inc: { __v: 1 } },
+      { returnDocument: 'after' }
+    );
+    if (!updated) {
+      return res.status(409).json({ success: false, message: 'Listing is already sold or unavailable' });
+    }
+    return res.json({ success: true, listing: updated });
+  }
+
+  if (listing.status !== 'available') return res.status(409).json({ message: 'Sold listings cannot be edited' });
+
+  const { title, description, category, condition, price, handoverLocation, location } = req.body || {};
 
   if (title !== undefined) {
     if (typeof title !== 'string' || !title.trim() || title.trim().length > 150) {
@@ -176,7 +197,7 @@ export async function updateListing(req, res) {
   }
 
   if (category !== undefined) {
-    const allowedCategories = ['books', 'electronics', 'stationery', 'hostel', 'cycles', 'other'];
+    const allowedCategories = ['books', 'electronics', 'stationery', 'hostel', 'chairs and tables', 'chairs_and_tables', 'cycles', 'other'];
     if (!allowedCategories.includes(category)) {
       return res.status(400).json({ success: false, message: 'Invalid category' });
     }
@@ -208,18 +229,10 @@ export async function updateListing(req, res) {
     listing.handoverLocation = loc;
   }
 
-  if (status !== undefined) {
-    const allowedStatuses = ['available', 'reserved', 'sold'];
-    if (!allowedStatuses.includes(status)) {
-      return res.status(400).json({ success: false, message: 'Status must be available, reserved, or sold' });
-    }
-    listing.status = status;
-  }
-
   // Handle image updates if new files are uploaded
+  const oldImages = [...listing.images];
+  const newImages = [];
   if (req.files && req.files.length > 0) {
-    const oldImages = [...listing.images];
-    const newImages = [];
     try {
       for (const file of req.files) {
         const uploaded = await uploadProductImage(file.buffer);
@@ -230,14 +243,15 @@ export async function updateListing(req, res) {
       for (const img of newImages) await deleteProductImage(img.publicId);
       return res.status(502).json({ success: false, message: 'Image upload failed' });
     }
-
-    // Delete replaced Cloudinary images to prevent orphan assets
-    for (const oldImg of oldImages) {
-      await deleteProductImage(oldImg.publicId);
-    }
   }
 
-  await listing.save();
+  try {
+    await listing.save();
+  } catch (error) {
+    for (const image of newImages) await deleteProductImage(image.publicId);
+    throw error;
+  }
+  if (newImages.length) for (const image of oldImages) await deleteProductImage(image.publicId);
   res.json({ success: true, listing });
 }
 
@@ -246,7 +260,7 @@ export async function deleteListing(req, res) {
     return res.status(400).json({ success: false, message: 'Invalid listing ID' });
   }
 
-  const listing = await Listing.findOne({ _id: req.params.id, deletedAt: null });
+  const listing = await Listing.findOne({ _id: req.params.id, campusCode: req.user.campusCode, deletedAt: null });
   if (!listing) {
     return res.status(404).json({ success: false, message: 'Listing not found' });
   }
@@ -256,14 +270,11 @@ export async function deleteListing(req, res) {
     return res.status(403).json({ success: false, message: 'Only the listing owner can delete this item' });
   }
 
-  // Clean associated Cloudinary images
-  for (const img of listing.images || []) {
-    await deleteProductImage(img.publicId);
-  }
-
-  listing.deletedAt = new Date();
-  listing.images = [];
-  await listing.save();
-
+  const removed = await Listing.findOneAndUpdate(
+    { _id: listing._id, sellerId: req.user._id, campusCode: req.user.campusCode, deletedAt: null, status: 'available' },
+    { $set: { deletedAt: new Date(), images: [] }, $inc: { __v: 1 } }
+  );
+  if (!removed) return res.status(409).json({ success: false, message: 'Only available listings can be deleted' });
+  for (const image of listing.images || []) await deleteProductImage(image.publicId);
   res.json({ success: true, message: 'Listing deleted successfully' });
 }

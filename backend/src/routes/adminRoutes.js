@@ -1,11 +1,29 @@
+import { getReports, reviewReport } from '../controllers/reportController.js';
 import { Router } from 'express';
 import { checkOrigin, requireAuth, requireRole } from '../middleware/auth.js';
-import { listVerificationUsers, viewVerification, reviewVerification } from '../controllers/adminController.js';
+import adminScope from '../middleware/adminScope.js';
+import { listVerificationUsers, viewVerification, reviewVerification, dashboard, setUserStatus } from '../controllers/adminController.js';
+import { adminListings, moderateListing } from '../controllers/adminListingController.js';
+import { adminCampuses, saveCampus } from '../controllers/campusController.js';
+import { adminHomepage, saveHomepage, deleteHomepage } from '../controllers/homepageController.js';
+import { uploadListingImages, prepareListingImages } from '../middleware/upload.js';
 
 const router = Router();
-router.use(requireAuth, requireRole('admin'));
+router.use(requireAuth, requireRole('admin'), checkOrigin);
+router.get('/campuses', adminCampuses);
+router.post('/campuses', saveCampus);
+router.patch('/campuses/:code', saveCampus);
+router.get('/homepage', adminHomepage);
+router.patch('/homepage/:slot', uploadListingImages, prepareListingImages, saveHomepage);
+router.delete('/homepage/:slot', deleteHomepage);
+router.use(adminScope);
+router.get('/dashboard', dashboard);
+router.get('/reports', getReports);
+router.patch('/reports/:id', reviewReport);
 router.get('/users', listVerificationUsers);
+router.patch('/users/:id/status', setUserStatus);
 router.get('/users/:id/verification', viewVerification);
-router.patch('/users/:id/verification', checkOrigin, reviewVerification);
-
+router.patch('/users/:id/verification', reviewVerification);
+router.get('/listings', adminListings);
+router.patch('/listings/:id', moderateListing);
 export default router;

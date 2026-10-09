@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Campuswap</title>
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/css/auth.css">
+  <link rel="stylesheet" href="/css/global.css">
+</head>
+<body>
+
+  <!-- Main Unified Auth Card -->
+  <div class="auth-card">
+    <a href="/index.html">
+      <img src="/assets/logo.png" alt="Campuswap Logo" class="logo">
+    </a>
+
+    <!-- Status Alert Banner -->
+    <div id="auth-alert" class="auth-alert" role="alert"></div>
+
+    <!-- Switcher Tabs -->
+    <div class="auth-tabs" role="tablist" aria-label="User Authentication Tabs">
+      <button type="button" class="auth-tab-btn active" id="tab-login" role="tab" aria-selected="true" aria-controls="login-section" data-tab="login">Login</button>
+      <button type="button" class="auth-tab-btn" id="tab-register" role="tab" aria-selected="false" aria-controls="register-section" data-tab="register">Create Account</button>
+    </div>
+
+    <!-- ================= LOGIN SECTION ================= -->
+    <section id="login-section" class="auth-section active" role="tabpanel" aria-labelledby="tab-login">
+      <h2>Login</h2>
+
+      <form id="login-form" method="post">
+        <!-- Email -->
+        <div class="box">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" name="email" placeholder="Enter your email" required autocomplete="email">
+        </div>
+
+        <!-- Password -->
+        <div class="box">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn" id="login-submit-btn">Login</button>
+      </form>
+
+      <!-- Switch to Register -->
+      <p class="switch">Don't have an account? <a href="#register" class="toggle-link" data-target="register">Create Account</a></p>
+    </section>
+
+    <!-- ================= REGISTER SECTION ================= -->
+    <section id="register-section" class="auth-section" role="tabpanel" aria-labelledby="tab-register">
+      <h2>Create Account</h2>
+
+      <form id="register-form" method="post">
+        <!-- 1. Full Name -->
+        <div class="box">
+          <label for="register-name">Full Name</label>
+          <input type="text" id="register-name" name="name" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+        </div>
+
+        <!-- 2. Email -->
+        <div class="box">
+          <label for="register-email">Email</label>
+          <input type="email" id="register-email" name="email" placeholder="e.g. rahul@example.com" required autocomplete="email">
+        </div>
+
+        <!-- 3. Password -->
+        <div class="box">
+          <label for="register-password">Password (min. 8 characters)</label>
+          <input type="password" id="register-password" name="password" placeholder="Create password" minlength="8" required autocomplete="new-password">
+        </div>
+
+        <!-- 4. Confirm Password -->
+        <div class="box">
+          <label for="register-cpassword">Confirm Password</label>
+          <input type="password" id="register-cpassword" name="cpassword" placeholder="Confirm password" minlength="8" required autocomplete="new-password">
+        </div>
+
+        <!-- 5. Phone -->
+        <div class="box">
+          <label for="register-phone">Phone Number (10 digits)</label>
+          <input type="tel" id="register-phone" name="phone" placeholder="e.g. 9876543210" pattern="[0-9]{10}" required autocomplete="tel">
+        </div>
+
+        <!-- 6. College Name -->
+        <div class="box">
+          <label for="register-college">College / Campus</label>
+          <select id="register-college" name="campusCode" required disabled>
+            <option value="" selected disabled>Select your college</option>
+          </select>
+        </div>
+
+        <!-- 7. Department -->
+        <div class="box">
+          <label for="register-dept">Department / Branch</label>
+          <input type="text" id="register-dept" name="department" placeholder="e.g. Computer Engineering">
+        </div>
+
+        <!-- 8. Year -->
+        <div class="box">
+          <label for="register-year">Current Year</label>
+          <input type="number" id="register-year" name="year" min="1" max="6" placeholder="e.g. 2">
+        </div>
+
+        <!-- 9. College ID Card Upload (Optional during registration) -->
+        <div class="box">
+          <label for="register-id-card">College ID Card (For Campus Verification)</label>
+          <input type="file" id="register-id-card" name="idCard" accept="image/jpeg,image/png,image/webp">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn" id="register-submit-btn">Create Account</button>
+      </form>
+
+      <!-- Switch to Login -->
+      <p class="switch">Already have an account? <a href="#login" class="toggle-link" data-target="login">Login</a></p>
+    </section>
+
+    <section id="otp-section" class="auth-section" aria-labelledby="otp-title">
+      <h2 id="otp-title">Verify your email</h2>
+      <p class="otp-intro">Enter the 6-digit code for <strong id="otp-email"></strong>.</p>
+      <form id="otp-form" method="post">
+        <div class="box">
+          <label for="email-otp">Verification code</label>
+          <input id="email-otp" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+        </div>
+        <button class="btn" type="submit">Verify Email</button>
+      </form>
+      <button id="resend-otp" class="otp-resend" type="button">Resend code</button>
+      <button id="otp-back" class="home-link otp-back" type="button">Back to login</button>
+      <button id="continue-button" class="btn" type="button" hidden>Continue</button>
+    </section>
+
+    <!-- Back to Home Link -->
+    <a href="/index.html" class="home-link">&larr; Back to Marketplace</a>
+  </div>
+
+  <script type="module" src="/js/login.js"></script>
+</body>
+</html>

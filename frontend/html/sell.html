@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="auth-checking">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell Item - Campuswap</title>
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <!-- Google Font: Lobster Two -->
+  <link rel="stylesheet" href="/css/logo_name.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/sell.css">
+  
+  
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/global.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header"></header>
+
+  <!-- Sell Form Section -->
+  <main class="sell-container">
+    <div class="sell-card">
+      <h1 class="sell-title">Sell an Item</h1>
+      <p class="sell-subtitle" id="sell-campus-subtitle">Post your unused items for students across your campus</p>
+
+      <!-- Alert Box -->
+      <div id="sell-alert" class="sell-alert" role="alert"></div>
+
+      <form class="sell-form" id="sell-form" enctype="multipart/form-data">
+        <fieldset><legend>Product Details</legend>
+        <div class="form-group">
+          <label for="item-name">Item Name</label>
+          <input type="text" id="item-name" name="title" placeholder="e.g. Scientific Calculator fx-991EX" required maxlength="150">
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Select a category</option>
+            <option value="books">Books &amp; Study Material</option>
+            <option value="electronics">Electronics &amp; Gadgets</option>
+            <option value="stationery">Stationery &amp; Drafting</option>
+            <option value="hostel">Hostel Essentials</option>
+            <option value="chairs and tables">Chairs &amp; Tables</option>
+            <option value="other">Other Campus Items</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="4" placeholder="Mention semester, edition, physical condition, reason for selling..."></textarea>
+        </div>
+
+        </fieldset>
+        <fieldset><legend>Price &amp; Condition</legend>
+        <div class="form-group">
+          <label for="price">Price (₹)</label>
+          <input type="number" id="price" name="price" placeholder="e.g. 500 (0 for giveaway)" min="0" required>
+        </div>
+
+        <div class="form-group">
+          <label for="condition">Condition</label>
+          <select id="condition" name="condition" required>
+            <option value="" disabled selected>Select condition</option>
+            <option value="new">Brand New (Unused)</option>
+            <option value="like-new">Like New (Barely used)</option>
+            <option value="good">Good (Fully functional)</option>
+            <option value="fair">Fair (Usable condition)</option>
+          </select>
+        </div>
+
+        </fieldset>
+        <fieldset><legend>Images</legend>
+        <div class="form-group">
+          <p class="field-hint">Maximum 2 images</p>
+          <div class="image-upload-slots">
+            <div class="image-slot">
+              <label for="image1">Image 1 (Required)</label>
+              <input type="file" id="image1" name="image1" accept="image/jpeg,image/png,image/webp" required>
+            </div>
+            <div class="image-slot">
+              <label for="image2">Image 2 (Optional)</label>
+              <input type="file" id="image2" name="image2" accept="image/jpeg,image/png,image/webp">
+            </div>
+          </div>
+          <small class="field-hint">Upload 1 or 2 clear photos. JPG, PNG, or WebP up to 5MB.</small>
+        </div>
+
+        </fieldset>
+        <fieldset><legend>Campus &amp; Handover</legend>
+        <div class="form-group">
+          <label for="college">Campus / College</label>
+          <input type="text" id="college" class="readonly-input" readonly disabled value="Loading campus...">
+          <small class="field-hint" id="college-code">Code: loading...</small>
+        </div>
+
+        <div class="form-group">
+          <label for="handover-location">Campus Handover Location</label>
+          <input type="text" id="handover-location" name="handoverLocation" placeholder="e.g. Central Library, Main Canteen, Hostel 2" required maxlength="200">
+        </div>
+
+        <div class="form-group">
+          <label for="seller-name">Seller Name</label>
+          <input type="text" id="seller-name" name="sellerName" class="readonly-input" readonly disabled value="Loading...">
+        </div>
+
+        <div class="form-group">
+          <label for="contact-number">Contact Number</label>
+          <input type="tel" id="contact-number" name="contactNumber" class="readonly-input" readonly disabled value="Loading...">
+          <small class="field-hint">Buyers from your campus will use this to contact you on WhatsApp.</small>
+        </div>
+
+        </fieldset>
+        <!-- Post Item Button -->
+        <button type="submit" class="btn-post" id="post-btn">Post Item</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Simple Footer -->
+  <footer class="footer"><div class="footer-container"><div class="footer-main"><div class="footer-brand"><span class="footer-logo">CampusSwap</span><p class="footer-tagline">Buy and sell within your campus.</p></div><nav aria-label="Footer"><ul class="footer-links"><li><a href="/index.html">Home</a></li><li><a href="/sell.html">Sell</a></li><li><a href="/favorites.html">Favorites</a></li><li><a href="/privacy.html">Privacy Policy</a></li><li><a href="/terms.html">Terms &amp; Conditions</a></li><li><a href="/profile.html?contact=admin" class="contact-support-link">Contact Admin</a></li></ul></nav></div><p class="footer-bottom">&copy; 2026 CampusSwap</p></div></footer>
+
+  <script type="module" src="/js/sell.js"></script>
+
+</body>
+</html>

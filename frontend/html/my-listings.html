@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="auth-checking">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Listings - Campuswap</title>
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/logo_name.css">
+  <link rel="stylesheet" href="/css/sell.css">
+  <link rel="stylesheet" href="/css/my-listings.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  
+  
+  <link rel="stylesheet" href="/css/global.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header"></header>
+
+  <main class="my-listings-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">My Listings</h1>
+        <p class="page-subtitle" id="campus-subtitle">Manage items you posted on your campus marketplace</p>
+      </div>
+      <a href="/sell.html" class="sell-btn" style="text-decoration:none;">+ Post New Item</a>
+    </div>
+
+    <!-- Alert Banner -->
+    <div id="action-alert" class="sell-alert" role="alert"></div>
+
+    <!-- Listings Container -->
+    <div id="listings-list" class="listings-list">
+      <div class="empty-state">
+        <p>Loading your listings...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Edit Listing Modal -->
+  <div id="edit-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit Listing</h2>
+        <button type="button" class="btn-close" id="btn-close-modal">&times;</button>
+      </div>
+
+      <div id="modal-alert" class="sell-alert" role="alert"></div>
+
+      <form id="edit-form" class="sell-form">
+        <input type="hidden" id="edit-id">
+
+        <div class="form-group">
+          <label for="edit-title">Title</label>
+          <input type="text" id="edit-title" required maxlength="150">
+        </div>
+
+        <div class="form-group">
+          <label for="edit-price">Price (₹)</label>
+          <input type="number" id="edit-price" min="0" required>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-category">Category</label>
+          <select id="edit-category" required>
+            <option value="books">Books &amp; Study Material</option>
+            <option value="electronics">Electronics &amp; Gadgets</option>
+            <option value="stationery">Stationery &amp; Drafting</option>
+            <option value="hostel">Hostel Essentials</option>
+            <option value="chairs and tables">Chairs &amp; Tables</option>
+            <option value="other">Other Campus Items</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-condition">Condition</label>
+          <select id="edit-condition" required>
+            <option value="new">Brand New (Unused)</option>
+            <option value="like-new">Like New (Barely used)</option>
+            <option value="good">Good (Fully functional)</option>
+            <option value="fair">Fair (Usable condition)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-location">Campus Handover Location</label>
+          <input type="text" id="edit-location" required maxlength="200">
+        </div>
+
+        <div class="form-group">
+          <label for="edit-description">Description</label>
+          <textarea id="edit-description" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Replace Photos (Optional, max 2)</label>
+          <div class="image-upload-slots">
+            <div class="image-slot">
+              <span>New Photo 1</span>
+              <input type="file" id="edit-image1" accept="image/jpeg,image/png,image/webp">
+            </div>
+            <div class="image-slot">
+              <span>New Photo 2</span>
+              <input type="file" id="edit-image2" accept="image/jpeg,image/png,image/webp">
+            </div>
+          </div>
+          <small class="field-hint">Leave blank to keep existing photos. Uploading replaces previous photos.</small>
+        </div>
+
+        <button type="submit" class="btn-post" id="btn-save-edit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer"><div class="footer-container"><div class="footer-main"><div class="footer-brand"><span class="footer-logo">CampusSwap</span><p class="footer-tagline">Buy and sell within your campus.</p></div><nav aria-label="Footer"><ul class="footer-links"><li><a href="/index.html">Home</a></li><li><a href="/sell.html">Sell</a></li><li><a href="/favorites.html">Favorites</a></li><li><a href="/privacy.html">Privacy Policy</a></li><li><a href="/terms.html">Terms &amp; Conditions</a></li><li><a href="/profile.html?contact=admin" class="contact-support-link">Contact Admin</a></li></ul></nav></div><p class="footer-bottom">&copy; 2026 CampusSwap</p></div></footer>
+
+  <script type="module" src="/js/my-listings.js"></script>
+</body>
+</html>

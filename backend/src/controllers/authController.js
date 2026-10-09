@@ -1,30 +1,35 @@
 import argon2 from 'argon2';
-import jwt from 'jsonwebtoken';
 import User from '../../../database/models/User.js';
-import { cookieOptions } from '../middleware/auth.js';
+import { cookieOptions, setAuthCookie } from '../middleware/auth.js';
+import Campus from '../../../database/models/Campus.js';
+import { beginEmailVerification } from './otpController.js';
 
-function safeUser(user) {
+export async function safeUser(user) {
   const { name, email, phone, college, department, year, role, status, verificationStatus, createdAt, updatedAt } = user;
-  return { id: user.id, name, email, phone, college, department, year, role, status, verificationStatus, createdAt, updatedAt };
+  const campus = user.campusCode ? await Campus.findOne({ campusCode: user.campusCode }).lean() : null;
+  return { id: user.id, verificationReason: user.verificationReason || null, hasCollegeId: Boolean(user.verificationAssetId), name, email, emailVerified: user.emailVerified, phone, college: campus?.name || college, campusCode: campus?.campusCode || null,
+    officialCode: campus?.officialCode || null, department, year, role, status, verificationStatus, createdAt, updatedAt };
 }
 
 export async function register(req, res) {
-  const { name, email, password, phone, college, department, year } = req.body || {};
-  if ([name, email, password, phone, college].some(value => typeof value !== 'string' || !value.trim()) ||
+  const { name, email, password, phone, campusCode, department, year } = req.body || {};
+  const campus = typeof campusCode === 'string' ? await Campus.findOne({ campusCode, status: 'active' }).lean() : null;
+  if (!campus) return res.status(400).json({ success: false, message: 'Select a college from the campus list' });
+  if ([name, email, password, phone].some(value => typeof value !== 'string' || !value.trim()) ||
       password.length < 8 || password.length > 128 ||
       (department !== undefined && typeof department !== 'string') ||
       (year !== undefined && (!Number.isInteger(year) || year < 1 || year > 6))) {
     return res.status(400).json({ success: false, message: 'Provide valid profile fields and a password of 8 to 128 characters' });
   }
 
-  const user = new User({ name, email, phone, college, department, year });
-  await user.validate(['name', 'email', 'phone', 'college', 'department', 'year']);
+  const user = new User({ name, email, phone, college: campus.name, campusCode: campus.campusCode, department, year });
+  await user.validate(['name', 'email', 'phone', 'college', 'campusCode', 'department', 'year']);
   if (await User.exists({ email: user.email })) {
     return res.status(409).json({ success: false, message: 'Email already registered' });
   }
   user.passwordHash = await argon2.hash(password, { type: argon2.argon2id });
   await user.save();
-  res.status(201).json({ success: true, user: safeUser(user) });
+  await beginEmailVerification(user, res, 201);
 }
 
 export async function login(req, res) {
@@ -34,12 +39,9 @@ export async function login(req, res) {
 
   const user = await User.findOne({ email: email.trim().toLowerCase() }).select('+passwordHash');
   if (!user || user.status !== 'active' || !await argon2.verify(user.passwordHash, password)) return invalid();
-
-  const token = jwt.sign({ authVersion: user.authVersion }, process.env.JWT_SECRET, {
-    algorithm: 'HS256', subject: user.id, expiresIn: '1d'
-  });
-  res.cookie('token', token, { ...cookieOptions(), maxAge: 24 * 60 * 60 * 1000 });
-  res.json({ success: true, user: safeUser(user) });
+  if (user.emailVerified !== true) return beginEmailVerification(user, res);
+  setAuthCookie(res, user);
+  res.json({ success: true, user: await safeUser(user) });
 }
 
 export async function logout(req, res) {
@@ -48,6 +50,6 @@ export async function logout(req, res) {
   res.json({ success: true, message: 'Logged out' });
 }
 
-export function getMe(req, res) {
-  res.json({ success: true, user: safeUser(req.user) });
+export async function getMe(req, res) {
+  res.json({ success: true, user: await safeUser(req.user) });
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - CampusSwap</title>
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/css/header.css"><link rel="stylesheet" href="/css/logo_name.css"><link rel="stylesheet" href="/css/profile.css">
+  <script type="module" src="/js/profile.js"></script>
+  <link rel="stylesheet" href="/css/global.css">
+</head>
+<body>
+<header class="header"></header>
+<main><h1>Profile &amp; Activity</h1><p id="message" role="status" aria-live="polite">Loading profile…</p>
+<div id="profile-content" hidden>
+<section class="panel"><h2>Account</h2><form id="profile-form">
+<label>Name<input name="name" required maxlength="100" autocomplete="name"></label>
+<label>Email<input name="email" type="email" readonly></label>
+
+<label>Phone<input name="phone" type="tel" pattern="\+?[0-9]{10,15}" required autocomplete="tel"></label>
+<label>Department<input name="department" maxlength="100"></label>
+<label>Year<input name="year" type="number" min="1" max="6"></label>
+<fieldset><legend>Campus</legend><label>College<input name="college" readonly></label><p id="campus-code"></p></fieldset>
+<button type="submit" class="primary">Save profile</button></form></section>
+<section class="panel"><h2>Verification</h2><p id="email-status"></p><p id="college-status"></p><p id="verification-reason"></p>
+<form id="verification-form" hidden><label>College ID (JPG, PNG or WebP, up to 5 MB)<input id="college-id" type="file" accept="image/jpeg,image/png,image/webp" required></label><button type="submit" class="primary">Submit college ID</button></form></section>
+</div></main>
+</body></html>

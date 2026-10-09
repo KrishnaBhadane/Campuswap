@@ -1,0 +1,13 @@
+main { width: min(800px, 92%); margin: 28px auto; color: #1f2937; }
+h1, h2, p { margin-bottom: 16px; } h1 { font-size: 27px; } h2 { font-size: 20px; }
+.panel { padding:24px 0; border:0; border-top:1px solid var(--border); margin-bottom:24px; }
+main form, main label { display: grid; gap: 8px; } main form { gap: 16px; }
+main input, main select, main button { font: inherit; padding: 10px 12px; border: 1px solid #cbd0d6; border-radius: 5px; min-width: 0; }
+input[readonly] { background: #f8fafc; } button { cursor: pointer; background: #f9be06; color: #111; }
+button:disabled { opacity: .6; cursor: not-allowed; } :focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
+.activity-controls, #activity-pages { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 16px; }
+#activity article { padding: 12px 0; border-bottom: 1px solid #ddd; overflow-wrap: anywhere; } #activity-pages { align-items: center; margin-top: 16px; }
+@media(max-width:600px) { .panel { padding:16px 0; } .activity-controls label { flex: 1; } }
+
+#profile-form fieldset { border:0; min-width:0; display:grid; gap:16px; }
+#profile-form legend { font-size:18px; font-weight:600; margin-bottom:16px; }

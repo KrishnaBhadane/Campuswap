@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="auth-checking">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Items - Campuswap</title>
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/logo_name.css">
+  <link rel="stylesheet" href="/css/favorites.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  
+  
+<link rel="stylesheet" href="/css/recently_added.css">
+  <link rel="stylesheet" href="/css/global.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header"></header>
+
+  <main class="favorites-container">
+    <div class="page-header">
+      <h1 class="page-title">Saved Items</h1>
+      <p class="page-subtitle" id="campus-subtitle">Items you bookmarked from your campus marketplace</p>
+    </div>
+
+    <!-- Alert Banner -->
+    <div id="fav-alert" style="display:none; padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:16px;" role="alert"></div>
+
+    <div id="favorites-grid" class="favorites-grid">
+      <div class="empty-favorites">
+        <p>Loading your saved items...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer"><div class="footer-container"><div class="footer-main"><div class="footer-brand"><span class="footer-logo">CampusSwap</span><p class="footer-tagline">Buy and sell within your campus.</p></div><nav aria-label="Footer"><ul class="footer-links"><li><a href="/index.html">Home</a></li><li><a href="/sell.html">Sell</a></li><li><a href="/favorites.html">Favorites</a></li><li><a href="/privacy.html">Privacy Policy</a></li><li><a href="/terms.html">Terms &amp; Conditions</a></li><li><a href="/profile.html?contact=admin" class="contact-support-link">Contact Admin</a></li></ul></nav></div><p class="footer-bottom">&copy; 2026 CampusSwap</p></div></footer>
+
+  <script type="module" src="/js/favorites.js"></script>
+</body>
+</html>
