@@ -5,6 +5,7 @@ export const authLimiter = rateLimit({
   max: 20,
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { trustProxy: false },
   message: { success: false, message: 'Too many login attempts. Please try again in 15 minutes.' }
 });
 
@@ -13,6 +14,7 @@ export const otpLimiter = rateLimit({
   max: 15,
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { trustProxy: false },
   message: { success: false, message: 'Too many OTP attempts. Please wait a few minutes.' }
 });
 
@@ -21,6 +23,7 @@ export const reportLimiter = rateLimit({
   max: 25,
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { trustProxy: false },
   message: { success: false, message: 'Too many reports submitted. Please try again later.' }
 });
 
@@ -29,5 +32,6 @@ export const uploadLimiter = rateLimit({
   max: 30,
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { trustProxy: false },
   message: { success: false, message: 'Too many uploads. Please try again later.' }
 });

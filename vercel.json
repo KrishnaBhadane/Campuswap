@@ -8,7 +8,7 @@
   ],
   "functions": {
     "api/index.js": {
-      "includeFiles": ["frontend/**", "node_modules/argon2/**"]
+      "includeFiles": "frontend/**"
     }
   }
 }

@@ -17,6 +17,7 @@ import errorHandler from './middleware/errorHandler.js';
 import connectDB from '../../database/db.js';
 
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(helmet({
   contentSecurityPolicy: {
